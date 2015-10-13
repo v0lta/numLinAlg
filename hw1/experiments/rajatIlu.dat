@@ -1,0 +1,68 @@
+------------------Ilu gmres-------------------------------- 
+======= ILU Options =======
+ Level of fill  : 1
+ Max iterations : 1000
+ Tolerance      : 1e-10
+ # Vectors      : 10
+===========================
+========================================================
+Size of A : 1879
+Number of non-zeroes of A : 12935
+Number of non-zeroes of ILU : 1961489
+========================================================
+Relative error of the solution 1.13517e-10
+Convergence history is stored in 'gmres.report'
+
+Wall clock time is 2 seconds.
+CPU time is 1.65312 seconds.
+------------------Ilu bicgstab----------------------------- 
+======= ILU Options =======
+ Level of fill  : 1
+ Max iterations : 1000
+ Tolerance      : 1e-10
+ # Vectors      : 10
+===========================
+========================================================
+Size of A : 1879
+Number of non-zeroes of A : 12935
+Number of non-zeroes of ILU : 1961489
+========================================================
+Relative error of the solution 6.55193e-11
+Convergence history is stored in 'bicgstab.report'
+
+Wall clock time is 2 seconds.
+CPU time is 1.63745 seconds.
+------------------Ilu idr --------------------------------- 
+======= ILU Options =======
+ Level of fill  : 1
+ Max iterations : 1000
+ Tolerance      : 1e-10
+ # Vectors      : 10
+===========================
+========================================================
+Size of A : 1879
+Number of non-zeroes of A : 12935
+Number of non-zeroes of ILU : 1961489
+========================================================
+Relative error of the solution 1.06411e-10
+Convergence history is stored in 'idr.report'
+
+Wall clock time is 2 seconds.
+CPU time is 1.62903 seconds.
+------------------Ilu Spectrum ---------------------------- 
+======= ILU Options =======
+ Level of fill  : 1
+ Max iterations : 1000
+ Tolerance      : 1e-10
+ # Vectors      : 10
+===========================
+========================================================
+Size of A : 1879
+Number of non-zeroes of A : 12935
+Number of non-zeroes of ILU : 1961489
+========================================================
+eigenvalues of A are stored in 'spectrum.mtx'
+eigenvalues of M^(-1) * A are stored in 'preconditioned_spectrum.mtx'
+
+Wall clock time is 1 seconds.
+CPU time is 1.57952 seconds.
