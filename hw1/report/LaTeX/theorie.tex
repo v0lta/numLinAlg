@@ -1,0 +1,21 @@
+\section{Theoretical background}
+\subsection{GMRES}
+The GMRES abbreviates generalized minimal residuals. It's idea is to solve $Ax = b$ by using a vector
+$x_n \in \mathcal{K}_n$ that minimizes the residual $r_n = b - Ax_n$ \footnote{Numerical Linear Algebra, Trefethen, Bau page 266}.
+In general the process is implemented using Arnoldi-iterations to compute the Krylov subspace and the Hessenberg representation of the
+original problem. The least square problem is then solved by coupling a QR decomposition into the Arnoldi iterations. 
+
+\subsection{BICGSTAB}
+The Bi-CGSTAB, method is a modified version of the biconjugate gradient method. The biconjugate gradient method uses recurrences which only
+require data from the last iteration, which keeps memory requirements under control. The original BCG algorithm does not converge 
+nicely. The main added benefit of the Bi-CGSTAB algorithm is better convergence behavior. 
+
+
+\subsection{IDR}
+IDRS are improved krylov subspace methods developed in Delft.
+
+\subsection{Spectrum}
+
+
+\subsection{Preconditioning}
+The convergence of iterative methods depends on the properties of the matrix a $\dots$
