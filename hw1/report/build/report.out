@@ -1,12 +1,11 @@
 \BOOKMARK [1][-]{section.1}{Theoretical background}{}% 1
 \BOOKMARK [2][-]{subsection.1.1}{GMRES}{section.1}% 2
 \BOOKMARK [2][-]{subsection.1.2}{BICGSTAB}{section.1}% 3
-\BOOKMARK [2][-]{subsection.1.3}{IDR}{section.1}% 4
-\BOOKMARK [2][-]{subsection.1.4}{Spectrum}{section.1}% 5
-\BOOKMARK [2][-]{subsection.1.5}{Preconditioning}{section.1}% 6
-\BOOKMARK [1][-]{section.2}{Results}{}% 7
-\BOOKMARK [2][-]{subsection.2.1}{rajat12}{section.2}% 8
-\BOOKMARK [2][-]{subsection.2.2}{lhr01}{section.2}% 9
-\BOOKMARK [2][-]{subsection.2.3}{ship003}{section.2}% 10
-\BOOKMARK [2][-]{subsection.2.4}{Fault639}{section.2}% 11
-\BOOKMARK [1][-]{section.3}{Conclusion}{}% 12
+\BOOKMARK [2][-]{subsection.1.3}{Spectrum}{section.1}% 4
+\BOOKMARK [2][-]{subsection.1.4}{Preconditioning}{section.1}% 5
+\BOOKMARK [1][-]{section.2}{Results}{}% 6
+\BOOKMARK [2][-]{subsection.2.1}{rajat12}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.2}{lhr01}{section.2}% 8
+\BOOKMARK [2][-]{subsection.2.3}{ship003}{section.2}% 9
+\BOOKMARK [2][-]{subsection.2.4}{Fault639}{section.2}% 10
+\BOOKMARK [1][-]{section.3}{Conclusion}{}% 11

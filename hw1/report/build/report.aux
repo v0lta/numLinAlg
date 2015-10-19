@@ -16,6 +16,7 @@
 \gdef\HyperFirstAtBeginDocument#1{#1}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
+\providecommand \oddpage@label [2]{}
 \select@language{english}
 \@writefile{toc}{\select@language{english}}
 \@writefile{lof}{\select@language{english}}
@@ -23,12 +24,26 @@
 \@writefile{toc}{\contentsline {section}{\numberline {1}Theoretical background}{1}{section.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.1}GMRES}{1}{subsection.1.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.2}BICGSTAB}{1}{subsection.1.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3}IDR}{1}{subsection.1.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.4}Spectrum}{1}{subsection.1.4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.5}Preconditioning}{1}{subsection.1.5}}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Results}{1}{section.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}rajat12}{1}{subsection.2.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}lhr01}{2}{subsection.2.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}ship003}{2}{subsection.2.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Fault639}{2}{subsection.2.4}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}Conclusion}{2}{section.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3}Spectrum}{1}{subsection.1.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.4}Preconditioning}{1}{subsection.1.4}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Krylov subspace methods\relax }}{1}{table.caption.1}}
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{tab:KrySub}{{1}{1}{Krylov subspace methods\relax }{table.caption.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Sparsity representation of the \texttt  {rajat12} matrix.\relax }}{2}{figure.caption.2}}
+\newlabel{fig:rajat12}{{1}{2}{Sparsity representation of the \texttt {rajat12} matrix.\relax }{figure.caption.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Results}{2}{section.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}rajat12}{2}{subsection.2.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces CPU-Time of running \texttt  {./ilu --method gmres --file rajat12.mtx --nvectors \$vectors --tolerance 1.e-10} with \texttt  {--ilu-level 0}(left) and \texttt  {--ilu-level 1}(right) the value of the \texttt  {\$vectors} variable is shown on the x axis.\relax }}{3}{figure.caption.3}}
+\newlabel{fig:iluRajatCompTime}{{2}{3}{CPU-Time of running \texttt {./ilu --method gmres --file rajat12.mtx --nvectors \$vectors --tolerance 1.e-10} with \texttt {--ilu-level 0}(left) and \texttt {--ilu-level 1}(right) the value of the \texttt {\$vectors} variable is shown on the x axis.\relax }{figure.caption.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces GMRES convergence with the rajat12 matrix with ILu level 0 and 1.\relax }}{3}{figure.caption.4}}
+\newlabel{fig:rajatConvergence}{{3}{3}{GMRES convergence with the rajat12 matrix with ILu level 0 and 1.\relax }{figure.caption.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Memory requirements of GMRES when run on the rajat12 matrix. \relax }}{4}{table.caption.5}}
+\newlabel{tab:RajatMemoryGMRES}{{2}{4}{Memory requirements of GMRES when run on the rajat12 matrix. \relax }{table.caption.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Original and preconditioned spectra of the rajat 12 matrix. Preconditioned matrices are shown for 0 level of fill in blue and level 1 in red.\relax }}{4}{figure.caption.6}}
+\newlabel{fig:rajatSpectra}{{4}{4}{Original and preconditioned spectra of the rajat 12 matrix. Preconditioned matrices are shown for 0 level of fill in blue and level 1 in red.\relax }{figure.caption.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Sparsity representation of the \texttt  {lhr01} matrix.\relax }}{4}{figure.caption.7}}
+\newlabel{fig:lhr01}{{5}{4}{Sparsity representation of the \texttt {lhr01} matrix.\relax }{figure.caption.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}lhr01}{5}{subsection.2.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}ship003}{5}{subsection.2.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Fault639}{5}{subsection.2.4}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Conclusion}{5}{section.3}}
