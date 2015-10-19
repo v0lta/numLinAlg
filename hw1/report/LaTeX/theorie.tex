@@ -9,10 +9,20 @@ original problem. The least square problem is then solved by coupling a QR decom
 The Bi-CGSTAB, method is a modified version of the biconjugate gradient method. The biconjugate gradient method uses recurrences which only
 require data from the last iteration, which keeps memory requirements under control. The original BCG algorithm does not converge 
 nicely. The main added benefit of the Bi-CGSTAB algorithm is better convergence behavior. 
+A table containing the most important methods is given below\footnote{ as found in numerical linear algebra, Trefethen, Bau page 235.}
+
+\begin{table}
+\centering
+\begin{tabular}{|l|c|r|} \hline
+   						    & $Ax = b$ & $Ax = \lambda x$ \\ \hline
+$A = A*$ (hermitian)        & CG	   &  Lanczos		   \\ \hline
+$A \neq A*$ (non-hermitian) & GMRES, CGN, BCG et al. & Arnoldi \\ \hline
+\end{tabular}
+\caption{Krylov subspace methods}
+\label{tab:KrySub}
+\end{table}
 
 
-\subsection{IDR}
-IDRS are improved krylov subspace methods developed in Delft.
 
 \subsection{Spectrum}
 

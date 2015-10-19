@@ -1,10 +1,69 @@
 \section{Results}
 
 \subsection{rajat12}
-The first experiment consisted of solving the four given problems using the GMRES and BiCGStab implementations 
-from the binaries given on Toledo. 
+\begin{figure}
+\centering
+\includegraphics[scale=0.8]{../src/figure/rajat12.pdf}
+\caption{Sparsity representation of the \texttt{rajat12} matrix.}
+\label{fig:rajat12}
+\end{figure}
+Figure~\ref{fig:rajat12} shows the \texttt{rajat12} circuit matrix. This matrix is real and the matlab routine \texttt{issymmetric} finds it to be not symmetric. From a complex point of view it can thus be considered non-hermitian. However a closer look at Figure~\ref{fig:rajat12} reveals that the matrix is very close to being symmetric. In a first series of experiments the iterative GMRES method is used. The level of the incomplete LU-factorization, which is used for preconditioning is varied from between zero and one. Furthermore the amount of available vectors is increased successively from zero to one hundred. \\
+Results for the time measurements are shown in figure~\ref{fig:iluRajatCompTime}. The data shows a significant increase in computation time, for higher numbers of available vectors, with a zero level of fill. The same observation does not hold with a level of fill of one, here computations oscillate around an expected value of approximately two seconds. \\
+Figure~\ref{fig:rajatConvergence} shows convergence of the residual using 10 Vectors with zero level of fill in blue and level of fill 1 in red. Here it is important to note, that sufficient accuracy is reached using 10 Vectors within $\approx 230$ iterations for ILU level zero. It takes $\approx 20$ when the level of fill is set to one. Curiously the decrease in iterations not lead to on overall reduction of computation time. Probably in this case single iterations are much faster with zero level of fill, which would account for the timing difference. An overall increase of computations time can be observed for more vectors with in the zero level of fill setting. This is probably due to the fact that the overhead caused by the additional vectors becomes significant only when the amount of total iterations is large. Interestingly, when more vectors are used fewer iterations are required until convergence is reached. Large amounts of vectors are probably beneficial in settings, where larger matrices are used.
+Memory requirements are shown in table~\ref{tab:RajatMemoryGMRES}. From the date it can be concluded that the higher ilu level does is neither 
+advantageous in terms of memory consumption or computing time when the relatively small circuit matrix is considered. \\
+Figure~\ref{fig:rajatSpectra}, shows the initial and preconditioned spectra. The normalizing effect of both preconditioners is clearly visible. Following the rule of thumb\footnote{Numerical linear algebra, Trefethen, Bau, page 314}: \\
+\textquotedblleft A preconditioner $M$ is good if $M^{-1}$A is not too far from normal and its eigenvalues are clustered.\textquotedblright \\
+Both preconditioners work but the higher level of fill gives more clustering, therefore it is better in this case.
+The direct method implemented in the \texttt{mumps} requires \texttt{5.08 MB}  of ram and finishes within $0.004035s = 4.035*10^{-3}s$. It is thus faster then any iterative scheme tried above, with more then acceptable memory consumption. Storing some data on the hard drive using the \texttt{--ooc} option increases the computation time to $0.007442s$. In this cases this is clearly not necessary, as the memory needed is available on almost any modern computer.
+
+\begin{figure}
+\centering
+\input{../src/figure/rajatIluV10To100.tex}
+\caption{CPU-Time of running \texttt{./ilu --method gmres --file rajat12.mtx  --nvectors \$vectors --tolerance 1.e-10} with \texttt{--ilu-level 0}(left) and \texttt{--ilu-level 1}(right) the value of the \texttt{\$vectors} variable is shown on the x axis.}
+\label{fig:iluRajatCompTime}
+\end{figure} 
+\begin{figure}
+\centering
+\input{../src/figure/preconConvergenceRajat.tex}
+\caption{GMRES convergence with the rajat12 matrix with ILu level 0 and 1.}
+\label{fig:rajatConvergence}
+\end{figure}
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|} \hline
+  \#vectors & ilu level of fill & memory \\
+   10 & 1 & \texttt{155.9 MB} \\
+   100 & 1 & \texttt{157.3 MB} \\
+   10 &  0 & \texttt{3.1 MB} \\
+   100 & 0 & \texttt{4.35 MB} \\ \hline
+\end{tabular}
+\caption{Memory requirements of GMRES when run on the rajat12 matrix. }
+\label{tab:RajatMemoryGMRES}
+\end{table}
+\begin{figure}
+\centering
+\includegraphics[scale=1]{../src/figure/spectraRajat12.pdf}
+%\input{../src/figure/spectraRajat12.tex}
+\caption{Original and preconditioned spectra of the rajat 12 matrix. Preconditioned matrices are shown for 0 level of fill in blue and level 1 in  red.}
+\label{fig:rajatSpectra}
+\end{figure} 
+ 
+ 
  
 \subsection{lhr01}
+\begin{figure}
+\centering
+\includegraphics[scale=0.8]{../src/figure/lhr01.pdf}
+\caption{Sparsity representation of the \texttt{lhr01} matrix.}
+\label{fig:lhr01}
+\end{figure}
+Figure~\ref{fig:lhr01} shows the sparsity pattern of the \texttt{lhr01} light hydrocarbon recovery matrix. This matrix is real and not symmetric. From a complex point of view it again can be considered non-hermitian. However this matrix is a lot less symmetric then the circuit equations that have been explored earlier. The iterative methods implemented in the provided executable fail in this case givig the error message: \\
+\texttt{ILU factorization failed on equation 21.} \\
+In this case the Gaussian elimination process is unstable. %TODO WHY???
+ The direct solver however is able to solve the problem in $0.009011 s$ using \texttt{7.365 MB}.
+
+
 
 \subsection{ship003}
 
