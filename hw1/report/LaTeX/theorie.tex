@@ -7,9 +7,8 @@ original problem. The least square problem is then solved by coupling a QR decom
 
 \subsection{BICGSTAB}
 The Bi-CGSTAB, method is a modified version of the biconjugate gradient method. The biconjugate gradient method uses recurrences which only
-require data from the last iteration, which keeps memory requirements under control. The original BCG algorithm does not converge 
-nicely. The main added benefit of the Bi-CGSTAB algorithm is better convergence behavior. 
-A table containing the most important methods is given below\footnote{ as found in numerical linear algebra, Trefethen, Bau page 235.}
+require data from the last iteration, which keeps memory requirements under control. The better memory usage comes at the price of lost monotonic convergence. The original BCG algorithm does not converge nicely. The main added benefit of the Bi-CGSTAB algorithm is better convergence behavior. 
+A table containing the most important methods is given below\footnote{ as found in numerical linear algebra, Trefethen, Bau page 235.}.
 
 \begin{table}
 \centering
@@ -23,9 +22,13 @@ $A \neq A*$ (non-hermitian) & GMRES, CGN, BCG et al. & Arnoldi \\ \hline
 \end{table}
 
 
-
-\subsection{Spectrum}
-
-
 \subsection{Preconditioning}
-The convergence of iterative methods depends on the properties of the matrix a $\dots$
+The convergence of iterative methods depends on the properties of the matrix A, such as the position of it's eigenvalues or normality. It the spectrum is spread out or A is too far from normal iterative schemes might fail to converge. To fix such problems instead of solving:
+\begin{equation}
+Ax = b.
+\end{equation}
+A matrix $M^{-1}$, the preconditioner is multiplied from the left to both sides of the equation \footnote{Numerical linear algebra, Trefethen, Bau page 313.}:
+\begin{equation}
+M^{-1} Ax = M^{-1}b. 
+\end{equation} 
+The resulting system $M^{-1}A = B$ should be close to normal $(\bar{B}^TB \approx B\bar{B}^T)$ and have a clustured spectrum. 

@@ -8,9 +8,9 @@
 \label{fig:rajat12}
 \end{figure}
 Figure~\ref{fig:rajat12} shows the \texttt{rajat12} circuit matrix. This matrix is real and the matlab routine \texttt{issymmetric} finds it to be not symmetric. From a complex point of view it can thus be considered non-hermitian. However a closer look at Figure~\ref{fig:rajat12} reveals that the matrix is very close to being symmetric. In a first series of experiments the iterative GMRES method is used. The level of the incomplete LU-factorization, which is used for preconditioning is varied from between zero and one. Furthermore the amount of available vectors is increased successively from zero to one hundred. \\
-Results for the time measurements are shown in figure~\ref{fig:iluRajatCompTime}. The data shows a significant increase in computation time, for higher numbers of available vectors, with a zero level of fill. The same observation does not hold with a level of fill of one, here computations oscillate around an expected value of approximately two seconds. \\
-Figure~\ref{fig:rajatConvergence} shows convergence of the residual using 10 Vectors with zero level of fill in blue and level of fill 1 in red. Here it is important to note, that sufficient accuracy is reached using 10 Vectors within $\approx 230$ iterations for ILU level zero. It takes $\approx 20$ when the level of fill is set to one. Curiously the decrease in iterations not lead to on overall reduction of computation time. Probably in this case single iterations are much faster with zero level of fill, which would account for the timing difference. An overall increase of computations time can be observed for more vectors with in the zero level of fill setting. This is probably due to the fact that the overhead caused by the additional vectors becomes significant only when the amount of total iterations is large. Interestingly, when more vectors are used fewer iterations are required until convergence is reached. Large amounts of vectors are probably beneficial in settings, where larger matrices are used.
-Memory requirements are shown in table~\ref{tab:RajatMemoryGMRES}. From the date it can be concluded that the higher ilu level does is neither 
+Results for the time measurements are shown in Figure~\ref{fig:iluRajatCompTime}. Computations where run on a ThinkPad equipped with \texttt{8 GB} of ram and an i7-4800mq processor. The data shows a significant increase in computation time, for higher numbers of available vectors, with a zero level of fill. The same observation does not hold with a level of fill of one, here computations oscillate around an expected value of approximately two seconds. \\
+Figure~\ref{fig:rajatConvergence} shows convergence of the residuals. Here it is important to note, that sufficient accuracy is reached using 10 Vectors within $\approx 230$ iterations for ILU level zero. It takes $\approx 20$ when the level of fill is set to one, due to improved conditioning of the problem. Curiously the decrease in iterations does not lead to on overall reduction of computation time. Probably in this case single iterations are much faster with zero level of fill, which would account for the timing difference. An overall increase of computation time can be observed for more vectors with in the zero level of fill setting. This is probably due to the fact that the overhead caused by the additional vectors becomes significant only when the amount of total iterations is large. Interestingly, when more vectors are used fewer iterations are required until convergence is reached. Large amounts of vectors are probably beneficial in settings, where larger matrices are used.
+Memory requirements are shown in table~\ref{tab:RajatMemoryGMRES}. From the data it can be concluded that the higher ilu level does is neither 
 advantageous in terms of memory consumption or computing time when the relatively small circuit matrix is considered. \\
 Figure~\ref{fig:rajatSpectra}, shows the initial and preconditioned spectra. The normalizing effect of both preconditioners is clearly visible. Following the rule of thumb\footnote{Numerical linear algebra, Trefethen, Bau, page 314}: \\
 \textquotedblleft A preconditioner $M$ is good if $M^{-1}$A is not too far from normal and its eigenvalues are clustered.\textquotedblright \\
@@ -25,27 +25,36 @@ The direct method implemented in the \texttt{mumps} requires \texttt{5.08 MB}  o
 \end{figure} 
 \begin{figure}
 \centering
-\input{../src/figure/preconConvergenceRajat.tex}
+\input{../src/figure/rajat12Convergence.tex}
 \caption{GMRES convergence with the rajat12 matrix with ILu level 0 and 1.}
 \label{fig:rajatConvergence}
 \end{figure}
 \begin{table}
 \centering
-\begin{tabular}{|c|c|c|} \hline
-  \#vectors & ilu level of fill & memory \\
-   10 & 1 & \texttt{155.9 MB} \\
-   100 & 1 & \texttt{157.3 MB} \\
-   10 &  0 & \texttt{3.1 MB} \\
-   100 & 0 & \texttt{4.35 MB} \\ \hline
+\begin{tabular}{|c|c|c|c|} \hline
+  \#vectors & ilu level of fill & memory & relative error \\
+   10 & 1 & \texttt{155.9 MB} & $1.13517 \cdot 10^{-10}$ \\
+   100 & 1 & \texttt{157.3 MB}& $2.4985  \cdot 10^{-10}$ \\
+   10 &  0 & \texttt{3.1 MB}  & $8.23038 \cdot 10^{-08}$ \\
+   100 & 0 & \texttt{4.35 MB} & $5.64681 \cdot 10^{-08}$ \\ \hline
 \end{tabular}
 \caption{Memory requirements of GMRES when run on the rajat12 matrix. }
 \label{tab:RajatMemoryGMRES}
+\begin{tabular}{|c|c|c|c|c|} \hline
+  \#vectors & ilu level of fill  & memory & CPU time & relative error \\
+   10  & 1  & \texttt{155.8 MB}    & 1.67045 s & $6.55193 \cdot 10^{-11}$ \\
+   100 & 1  & \texttt{155.823 MB} & 1.94236 s & $6.55193 \cdot 10^{-11}$  \\
+   10  & 0  & \texttt{3.042 MB}   & 0.00815 s & $2.09145 \cdot 10^{-09}$  \\
+   100 & 0  & \texttt{3.042 MB}   & 0.01006 s & $2.09145 \cdot 10^{-09}$  \\ \hline
+\end{tabular}
+\caption{Memory and time requirements of bicgstab when run on the rajat12 matrix. }
+\label{tab:RajatMemoryBicgstab}
 \end{table}
 \begin{figure}
 \centering
 \includegraphics[scale=1]{../src/figure/spectraRajat12.pdf}
 %\input{../src/figure/spectraRajat12.tex}
-\caption{Original and preconditioned spectra of the rajat 12 matrix. Preconditioned matrices are shown for 0 level of fill in blue and level 1 in  red.}
+\caption{Original and preconditioned spectra of the rajat12 matrix. Preconditioned matrices are shown for 0 level of fill in blue and level 1 in  red.}
 \label{fig:rajatSpectra}
 \end{figure} 
  
@@ -58,13 +67,62 @@ The direct method implemented in the \texttt{mumps} requires \texttt{5.08 MB}  o
 \caption{Sparsity representation of the \texttt{lhr01} matrix.}
 \label{fig:lhr01}
 \end{figure}
-Figure~\ref{fig:lhr01} shows the sparsity pattern of the \texttt{lhr01} light hydrocarbon recovery matrix. This matrix is real and not symmetric. From a complex point of view it again can be considered non-hermitian. However this matrix is a lot less symmetric then the circuit equations that have been explored earlier. The iterative methods implemented in the provided executable fail in this case givig the error message: \\
+Figure~\ref{fig:lhr01} shows the sparsity pattern of the \texttt{lhr01} light hydrocarbon recovery matrix. This matrix is real and not symmetric. From a complex point of view it again can be considered non-hermitian. However this matrix is a lot less symmetric then the circuit equations that have been explored earlier. The iterative methods implemented in the provided executable fail. \\ Printing the error message: \\
 \texttt{ILU factorization failed on equation 21.} \\
-In this case the Gaussian elimination process is unstable. %TODO WHY???
- The direct solver however is able to solve the problem in $0.009011 s$ using \texttt{7.365 MB}.
-
+In this case the Gaussian elimination process is unstable. Instabilities could arise if an entry in the L matrix is very large. If the L matrix is then multiplied with the corresponding U, the original A is not obtained \footnote{Numerical Linear Algebra, Trefethen, Bau, page 163}. In our
+case an obtained preconditioner would not be usable. The direct solver however is able to solve the problem in $0.009011 s$ using \texttt{7.365 MB}. Interestingly enough the direct solver uses a LU-decomposition as well to solve the problem. The two problems are sightly different the incomplete LU seeks to solve $A \approx LU$. The direct methods attempts to solve $LUx = Pb$. These two problems will be implemented differently. Without looking at the code it is difficult to diagnose the problem.
 
 
 \subsection{ship003}
+\begin{figure}
+\centering
+\input{../src/figure/shipConvergence.tex}
+\caption{GMRES convergence with the ship matrix with ILu level 0 and 1.}
+\label{fig:shipConvergence}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{../src/figure/ship}
+\caption{Visualisation of the sparsity pattern of the \texttt{ship003}-matrix}
+\label{fig:ship}
+\end{figure}
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|} \hline
+  \#vectors & ilu level of fill & memory & time & relative error \\
+   10  & 1 & \texttt{9.473 GB} & 61.5548s & 20.8122\\
+   100 & 1 & \texttt{9.561 GB}  & 81.6827s & 1.15364 \\
+   10  & 0 & \texttt{1.037 GB}  & 48.2886s & 91.2033 \\ 
+   100 & 0 & \texttt{1.125 GB}  & 66.3984s & 3.18241 \\ \hline
+\end{tabular}
+\caption{Time, memory and accuracy test results of various GMRES computations, on the ship 003 matrix. The preconditioner's level of fill as well as the number of available vectors have been varied.}
+\label{tab:shipGMRES}
+\end{table}
+Figure~\ref{fig:ship} shows the sparsity pattern of the \texttt{ship03} matrix. Results of iterative computations using the GMRES-algorithm are shown in table~\ref{tab:shipGMRES}. The results here are similar to what was observed earlier. Decreasing the level of fill or vector number leads to faster computation time and higher error. Convergence plots are given in Figure~\ref{fig:shipConvergence}. Interestingly the  GMRES algorithms only find the correct solution, if the methods have at least 100 vectors at their disposal. In contrast to the rajat matrix, which was experimented with earlier, the level of fill is not so important. Indicating, that both preconditioners are of similar quality. Unfortunately the matrix is too large for eigenvalue computations on the machine available, making further investigation impossible. The bicgstab algorithm does not converge, as the solution it computes is useless it's memory usage has not been measured. Again the direct method outperforms the iterative ones producing a solution with an error of $1.273*10^{-10}$ within $21.7s$ using \texttt{2.996 GB} of RAM.
 
 \subsection{Fault639}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{../src/figure/Fault}
+\caption{Visualisation of the sparsity pattern of the \texttt{fault639}-matrix}
+\label{fig:fault}
+\end{figure}
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|} \hline
+  \#vectors & ilu level of fill & memory & CPU time & relative error \\
+   10  & 1  & ?? & 269.7s & 0.962255  \\
+   100 & 1  & ?? & 465 s  & 0.82716  \\
+   10  & 0  & \texttt{ 3.723 GB} & 181.4s & 0.892187  \\
+   100 & 0  & \texttt{ 4.184 GB} & 357.1s & 0.0304293  \\ \hline
+\end{tabular}
+\caption{Memory requirements of GMRES when run on the fault matrix. }
+\label{tab:FaultGMRES}
+\end{table}
+\begin{figure}
+\centering
+\input{../src/figure/faultConvergence2.tex}
+\caption{GMRES convergence with the fault matrix with ILu level 0 and 1.}
+\label{fig:faultConvergence}
+\end{figure}
+The biggest matrix considered in this series of experiments is the \texttt{fault639}-matarix. Table~\ref{tab:FaultGMRES} and figure~\ref{fig:faultConvergence} contain more information on the performance of the iterative methods under consideration. Unfortunately \texttt{valgrind} crashed during memory measurements for the very memory intensive computations with iLU level of fill one. The bicgstab method again is far from convergence. However the \texttt{gmres} method run with zero level of fill iLU preconditioning and 100 vectors converges to a good solution. Running for approximately five minutes this iterative scheme performs much better then the direct methods, which took around 22 minutes to compute a solution with error of the magnitude $10^{-12}$ on eupen in the computer science department. In order to run the direct methods it was necessary to store data on the hard drive during computations (\texttt{--ooc} option). Interestingly on ESAT's vierre64 server with \texttt{32 GB} ram and no \texttt{--ooc} computations took five hours to compute a solution of accuracy $10^{-10}$. Probably because data did exceed the total memory available and the system started to swap and I/O operations on esat's network drives are slow. 

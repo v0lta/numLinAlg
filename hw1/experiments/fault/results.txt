@@ -1,0 +1,278 @@
+------------------Ilu gmres-------------------------------- 
+Numerical Linear Algebra : Iterative Methods
+
+Copyright KU Leuven - department of Computer Science
+All rights reserved
+
+Contact: Thomas Mach or Karl Meerbergen
+======= ILU Options =======
+ Level of fill  : 0
+ Max iterations : 1000
+ Tolerance      : 1e-10
+ # Vectors      : 10
+===========================
+========================================================
+Size of A : 638802
+Number of non-zeroes of A : 28614564
+Number of non-zeroes of ILU : 28614564
+========================================================
+Relative error of the solution 0.892187
+Convergence history is stored in 'gmres.report'
+
+Wall clock time is 182 seconds.
+CPU time is 181.467 seconds.
+==376== Memcheck, a memory error detector
+==376== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==376== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
+==376== Command: ./ilu --method gmres --file ./Fault_639/Fault_639.mtx --nvectors 10 --tolerance 1.e-10 --ilu-level 0
+==376== 
+Numerical Linear Algebra : Iterative Methods
+
+Copyright KU Leuven - department of Computer Science
+All rights reserved
+
+Contact: Thomas Mach or Karl Meerbergen
+======= ILU Options =======
+ Level of fill  : 0
+ Max iterations : 1000
+ Tolerance      : 1e-10
+ # Vectors      : 10
+===========================
+==376== Warning: set address range perms: large range [0x3a00e040, 0x55e6cfa0) (undefined)
+==376== Warning: set address range perms: large range [0x55e6d040, 0x71ccbfa0) (undefined)
+==376== Warning: set address range perms: large range [0x55e6d028, 0x71ccbfb8) (noaccess)
+==376== Warning: set address range perms: large range [0x3a00e028, 0x55e6cfb8) (noaccess)
+========================================================
+Size of A : 638802
+Number of non-zeroes of A : 28614564
+Number of non-zeroes of ILU : 28614564
+========================================================
+Relative error of the solution 0.892187
+Convergence history is stored in 'gmres.report'
+
+Wall clock time is 2205 seconds.
+CPU time is 2203.71 seconds.
+==376== 
+==376== HEAP SUMMARY:
+==376==     in use at exit: 0 bytes in 0 blocks
+==376==   total heap usage: 14,630,132 allocs, 14,630,132 frees, 3,723,969,563 bytes allocated
+==376== 
+==376== All heap blocks were freed -- no leaks are possible
+==376== 
+==376== For counts of detected and suppressed errors, rerun with: -v
+==376== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+Numerical Linear Algebra : Iterative Methods
+
+Copyright KU Leuven - department of Computer Science
+All rights reserved
+
+Contact: Thomas Mach or Karl Meerbergen
+======= ILU Options =======
+ Level of fill  : 0
+ Max iterations : 1000
+ Tolerance      : 1e-10
+ # Vectors      : 100
+===========================
+========================================================
+Size of A : 638802
+Number of non-zeroes of A : 28614564
+Number of non-zeroes of ILU : 28614564
+========================================================
+Relative error of the solution 0.0304293
+Convergence history is stored in 'gmres.report'
+
+Wall clock time is 357 seconds.
+CPU time is 357.055 seconds.
+==808== Memcheck, a memory error detector
+==808== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==808== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
+==808== Command: ./ilu --method gmres --file ./Fault_639/Fault_639.mtx --nvectors 100 --tolerance 1.e-10 --ilu-level 0
+==808== 
+Numerical Linear Algebra : Iterative Methods
+
+Copyright KU Leuven - department of Computer Science
+All rights reserved
+
+Contact: Thomas Mach or Karl Meerbergen
+======= ILU Options =======
+ Level of fill  : 0
+ Max iterations : 1000
+ Tolerance      : 1e-10
+ # Vectors      : 100
+===========================
+==808== Warning: set address range perms: large range [0x3a00e040, 0x55e6cfa0) (undefined)
+==808== Warning: set address range perms: large range [0x55e6d040, 0x71ccbfa0) (undefined)
+==808== Warning: set address range perms: large range [0x55e6d028, 0x71ccbfb8) (noaccess)
+==808== Warning: set address range perms: large range [0x3a00e028, 0x55e6cfb8) (noaccess)
+========================================================
+Size of A : 638802
+Number of non-zeroes of A : 28614564
+Number of non-zeroes of ILU : 28614564
+========================================================
+==808== Warning: set address range perms: large range [0x554ae040, 0x740ebb10) (undefined)
+==808== Warning: set address range perms: large range [0x554ae028, 0x740ebb28) (noaccess)
+Relative error of the solution 0.0304293
+Convergence history is stored in 'gmres.report'
+
+Wall clock time is 4322 seconds.
+CPU time is 4319.05 seconds.
+==808== 
+==808== HEAP SUMMARY:
+==808==     in use at exit: 0 bytes in 0 blocks
+==808==   total heap usage: 14,630,402 allocs, 14,630,402 frees, 4,184,393,724 bytes allocated
+==808== 
+==808== All heap blocks were freed -- no leaks are possible
+==808== 
+==808== For counts of detected and suppressed errors, rerun with: -v
+==808== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+Numerical Linear Algebra : Iterative Methods
+
+Copyright KU Leuven - department of Computer Science
+All rights reserved
+
+Contact: Thomas Mach or Karl Meerbergen
+======= ILU Options =======
+ Level of fill  : 1
+ Max iterations : 1000
+ Tolerance      : 1e-10
+ # Vectors      : 10
+===========================
+========================================================
+Size of A : 638802
+Number of non-zeroes of A : 28614564
+Number of non-zeroes of ILU : 60579744
+========================================================
+Relative error of the solution 0.962255
+Convergence history is stored in 'gmres.report'
+
+Wall clock time is 291 seconds.
+CPU time is 269.723 seconds.
+==1528== Memcheck, a memory error detector
+==1528== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==1528== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
+==1528== Command: ./ilu --method gmres --file ./Fault_639/Fault_639.mtx --nvectors 10 --tolerance 1.e-10 --ilu-level 1
+==1528== 
+Numerical Linear Algebra : Iterative Methods
+
+Copyright KU Leuven - department of Computer Science
+All rights reserved
+
+Contact: Thomas Mach or Karl Meerbergen
+======= ILU Options =======
+ Level of fill  : 1
+ Max iterations : 1000
+ Tolerance      : 1e-10
+ # Vectors      : 10
+===========================
+==1528== Warning: set address range perms: large range [0x3a00e040, 0x55e6cfa0) (undefined)
+==1528== Warning: set address range perms: large range [0x55e6d040, 0x71ccbfa0) (undefined)
+==1528== Warning: set address range perms: large range [0x55e6d028, 0x71ccbfb8) (noaccess)
+==1528== Warning: set address range perms: large range [0x3a00e028, 0x55e6cfb8) (noaccess)
+==1528== Warning: set address range perms: large range [0x62efe040, 0x7e39da80) (undefined)
+==1528== Warning: set address range perms: large range [0x7e39e040, 0x9983da80) (undefined)
+==1528== Warning: set address range perms: large range [0x9983e040, 0xd017d4c0) (undefined)
+==1528== Warning: set address range perms: large range [0x62efe028, 0x7e39da98) (noaccess)
+==1528== Warning: set address range perms: large range [0xd017e040, 0x106abd4c0) (undefined)
+==1528== Warning: set address range perms: large range [0x7e39e028, 0x9983da98) (noaccess)
+==1528== Warning: set address range perms: large range [0x106abe040, 0x173d3c940) (undefined)
+==1528== Warning: set address range perms: large range [0x9983e028, 0xd017d4d8) (noaccess)
+==1528== Warning: set address range perms: large range [0x173d3d040, 0x1e0fbb940) (undefined)
+==1528== Warning: set address range perms: large range [0xd017e028, 0x106abd4d8) (noaccess)
+**1528** new/new[] failed and should throw an exception, but Valgrind
+**1528**    cannot throw exceptions and so is aborting instead.  Sorry.
+==1528==    at 0x4C2A95C: ??? (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1528==    by 0x4C2B150: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1528==    by 0x40C8FD: std::vector<unsigned long, std::allocator<unsigned long> >::_M_insert_aux(__gnu_cxx::__normal_iterator<unsigned long*, std::vector<unsigned long, std::allocator<unsigned long> > >, unsigned long const&) (in /home/moritz/uni/numLinAlg/hw1/ilu)
+==1528==    by 0x40EF7F: std::auto_ptr<glas::compressed_sparse_and_diagonal_structure<glas::row_orientation, unsigned long, unsigned long, 0> > glas::ilu_fill<glas::compressed_sparse_and_diagonal_structure<glas::row_orientation, unsigned long, unsigned long, 0>, glas::compressed_sparse_and_diagonal_structure<glas::row_orientation, unsigned long, unsigned long, 0> >(glas::compressed_sparse_and_diagonal_structure<glas::row_orientation, unsigned long, unsigned long, 0>&, int) (in /home/moritz/uni/numLinAlg/hw1/ilu)
+==1528==    by 0x404E8A: main (in /home/moritz/uni/numLinAlg/hw1/ilu)
+==1528== 
+==1528== HEAP SUMMARY:
+==1528==     in use at exit: 4,608,999,828 bytes in 103 blocks
+==1528==   total heap usage: 14,627,092 allocs, 14,626,989 frees, 10,285,785,082 bytes allocated
+==1528== 
+==1528== LEAK SUMMARY:
+==1528==    definitely lost: 0 bytes in 0 blocks
+==1528==    indirectly lost: 0 bytes in 0 blocks
+==1528==      possibly lost: 963 bytes in 22 blocks
+==1528==    still reachable: 4,608,998,865 bytes in 81 blocks
+==1528==         suppressed: 0 bytes in 0 blocks
+==1528== Rerun with --leak-check=full to see details of leaked memory
+==1528== 
+==1528== For counts of detected and suppressed errors, rerun with: -v
+==1528== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+Numerical Linear Algebra : Iterative Methods
+
+Copyright KU Leuven - department of Computer Science
+All rights reserved
+
+Contact: Thomas Mach or Karl Meerbergen
+======= ILU Options =======
+ Level of fill  : 1
+ Max iterations : 1000
+ Tolerance      : 1e-10
+ # Vectors      : 100
+===========================
+========================================================
+Size of A : 638802
+Number of non-zeroes of A : 28614564
+Number of non-zeroes of ILU : 60579744
+========================================================
+Relative error of the solution 0.82716
+Convergence history is stored in 'gmres.report'
+
+Wall clock time is 469 seconds.
+CPU time is 465.014 seconds.
+==1594== Memcheck, a memory error detector
+==1594== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==1594== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
+==1594== Command: ./ilu --method gmres --file ./Fault_639/Fault_639.mtx --nvectors 100 --tolerance 1.e-10 --ilu-level 1
+==1594== 
+Numerical Linear Algebra : Iterative Methods
+
+Copyright KU Leuven - department of Computer Science
+All rights reserved
+
+Contact: Thomas Mach or Karl Meerbergen
+======= ILU Options =======
+ Level of fill  : 1
+ Max iterations : 1000
+ Tolerance      : 1e-10
+ # Vectors      : 100
+===========================
+==1594== Warning: set address range perms: large range [0x3a00e040, 0x55e6cfa0) (undefined)
+==1594== Warning: set address range perms: large range [0x55e6d040, 0x71ccbfa0) (undefined)
+==1594== Warning: set address range perms: large range [0x55e6d028, 0x71ccbfb8) (noaccess)
+==1594== Warning: set address range perms: large range [0x3a00e028, 0x55e6cfb8) (noaccess)
+==1594== Warning: set address range perms: large range [0x62efe040, 0x7e39da80) (undefined)
+==1594== Warning: set address range perms: large range [0x7e39e040, 0x9983da80) (undefined)
+==1594== Warning: set address range perms: large range [0x9983e040, 0xd017d4c0) (undefined)
+==1594== Warning: set address range perms: large range [0x62efe028, 0x7e39da98) (noaccess)
+==1594== Warning: set address range perms: large range [0xd017e040, 0x106abd4c0) (undefined)
+==1594== Warning: set address range perms: large range [0x7e39e028, 0x9983da98) (noaccess)
+==1594== Warning: set address range perms: large range [0x106abe040, 0x173d3c940) (undefined)
+==1594== Warning: set address range perms: large range [0x9983e028, 0xd017d4d8) (noaccess)
+==1594== Warning: set address range perms: large range [0x173d3d040, 0x1e0fbb940) (undefined)
+==1594== Warning: set address range perms: large range [0xd017e028, 0x106abd4d8) (noaccess)
+**1594** new/new[] failed and should throw an exception, but Valgrind
+**1594**    cannot throw exceptions and so is aborting instead.  Sorry.
+==1594==    at 0x4C2A95C: ??? (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1594==    by 0x4C2B150: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1594==    by 0x40C8FD: std::vector<unsigned long, std::allocator<unsigned long> >::_M_insert_aux(__gnu_cxx::__normal_iterator<unsigned long*, std::vector<unsigned long, std::allocator<unsigned long> > >, unsigned long const&) (in /home/moritz/uni/numLinAlg/hw1/ilu)
+==1594==    by 0x40EF7F: std::auto_ptr<glas::compressed_sparse_and_diagonal_structure<glas::row_orientation, unsigned long, unsigned long, 0> > glas::ilu_fill<glas::compressed_sparse_and_diagonal_structure<glas::row_orientation, unsigned long, unsigned long, 0>, glas::compressed_sparse_and_diagonal_structure<glas::row_orientation, unsigned long, unsigned long, 0> >(glas::compressed_sparse_and_diagonal_structure<glas::row_orientation, unsigned long, unsigned long, 0>&, int) (in /home/moritz/uni/numLinAlg/hw1/ilu)
+==1594==    by 0x404E8A: main (in /home/moritz/uni/numLinAlg/hw1/ilu)
+==1594== 
+==1594== HEAP SUMMARY:
+==1594==     in use at exit: 4,608,999,828 bytes in 103 blocks
+==1594==   total heap usage: 14,627,092 allocs, 14,626,989 frees, 10,285,785,083 bytes allocated
+==1594== 
+==1594== LEAK SUMMARY:
+==1594==    definitely lost: 0 bytes in 0 blocks
+==1594==    indirectly lost: 0 bytes in 0 blocks
+==1594==      possibly lost: 963 bytes in 22 blocks
+==1594==    still reachable: 4,608,998,865 bytes in 81 blocks
+==1594==         suppressed: 0 bytes in 0 blocks
+==1594== Rerun with --leak-check=full to see details of leaked memory
+==1594== 
+==1594== For counts of detected and suppressed errors, rerun with: -v
+==1594== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+

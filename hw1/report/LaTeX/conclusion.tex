@@ -1,6 +1,3 @@
 %The conclusion section.
 \section{Conclusion}
-A lot of assumptions have been made throughout the creation of the model.
-Most of these are oversimplifications of the real world and we barley scratched the surface of the real optimization problem behind the airplane.
-
-
+When it comes to choosing a direct or indirect method it is crucial to consider the size of the problem. Direct methods have outperformed the iterative ones for the small problems considered in this report. When the problem is very large direct methods take very long and need a lot of memory. The memory requirements are particularly problematic since swapping might be necessary, which will slow down computations further. Iterative solvers can work well if a preconditioner is available that nicely clusters the eigenvalues and keeps the matrix close to normal. If that is the case iterative methods will greatly diminish computation time and memory consumption. 
