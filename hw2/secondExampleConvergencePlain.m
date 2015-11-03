@@ -1,8 +1,10 @@
 clear all
 %% The first example from Embree's paper on the restart GMRES.
-
-A = [ 1 1 1; 0 1 3; 0 0 1];
-b = [2 -4 1]';
+disp('GMRES(1)')
+A = [ 1 2 -2;
+      0 2  4;
+      0 0  3];
+b = [3 1 1]';
 
 it = 30;
 r1 = zeros(3,it);
@@ -20,10 +22,9 @@ for i = 1:length(x)
         r1Plain(i,j) = norm(r1)/norm(b);
     end
 end
-disp('GMRES(1) done')
-
 
 %% The second example from the same paper on restart GMRES.
+disp('GMRES(2)')
 r2 = zeros(3,it);
 %r(k+2) = p(A)r(k). p(z) = 1 + alpha*z + beta*z^2;
 r2Norms = ones(1,it);
@@ -62,14 +63,11 @@ for i = 1:length(x)
     end
     disp(i/length(x)*100)
 end
-disp('GMRES(2) done')
 
 %% Plotting
-disp('Plotting')
 tickLabels = sort([0 -5 -10 -15]);
 figure(1)
 r1Plot = surf(x,y,log(r1Plain));shading('flat');view([0,90]);colorbar;caxis([-15 0]);
 figure(2)
 r2Plot = surf(x,y,log(r2Plain));shading('flat');view([0,90]);colorbar;caxis([-15 0]);
-
 

@@ -26,6 +26,7 @@ disp('GMRES(2)')
 r2 = zeros(3,it);
 %r(k+2) = p(A)r(k). p(z) = 1 + alpha*z + beta*z^2;
 r2(:,1) = b;
+r2(:,2) = [3 -3 0];
 r2Norms = zeros(1,it);
 r2Norms(1) = norm(r2(:,1))/norm(b);
 
@@ -53,10 +54,11 @@ for k=1:it
    r2Norms(k+1) = norm(r2(:,k+1))/norm(b);   
 end
 
-semilogy(1:(it+1),r1Norms)
+semilogy(1:(it+1),r1Norms,'LineWidth',2)
 hold on
-semilogy(1:(it+1),r2Norms)
+semilogy(1:(it+1),r2Norms,'LineWidth',2)
 legend('GMRES(1)','GMRES(2)')
+hold off
 
 
 

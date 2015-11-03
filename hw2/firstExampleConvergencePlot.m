@@ -1,7 +1,9 @@
 clear all
 %% The first example from Embree's paper on the restart GMRES.
 disp('GMRES(1)')
-A = [ 1 1 1; 0 1 3; 0 0 1];
+A = [ 1 1 1; 
+      0 1 3;
+      0 0 1];
 b = [2 -4 1]';
 
 it = 30;
@@ -52,10 +54,11 @@ for k=1:it
    r2Norms(k+1) = norm(r2(:,k+1))/norm(b);   
 end
 
-semilogy(1:(it+1),r1Norms)
+semilogy(1:(it+1),r1Norms,'LineWidth',2)
 hold on
-semilogy(1:(it+1),r2Norms)
+semilogy(1:(it+1),r2Norms,'LineWidth',2)
 legend('GMRES(1)','GMRES(2)')
+hold off
 
 
 
