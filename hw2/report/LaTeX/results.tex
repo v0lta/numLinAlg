@@ -1,4 +1,40 @@
 \section{Results}
+\subsection{Experiments done in the paper}
+Embree considers two examples in his paper, the first one using
+\begin{equation}
+\mathbf{A} = \begin{pmatrix}
+1 & 1 & 1 \\
+0 & 1 & 3 \\
+0 & 0 & 1 \\
+\end{pmatrix}
+\;\;\; 
+\mathbf{b} = \begin{pmatrix}
+2 \\ -4 \\ 1
+\end{pmatrix}.
+\end{equation}
+The second being
+\begin{equation}
+\mathbf{B} =
+\begin{pmatrix}
+1 & 2 & -2 \\
+0 & 2 & 4 \\
+0 & 0 & 3 \\
+\end{pmatrix}
+\;\;\;
+\mathbf{b} =
+\begin{pmatrix}
+3 \\
+1 \\
+1 \\
+\end{pmatrix}
+\end{equation}
+Using series expressions as provided in the paper the convergence plots for \texttt{GMRES(1)} and \texttt{GMRES(2)} have been computed, the results shown in figure~\ref{fig:ConvergenceFig1AndFig3} resemble plots one and three in the paper. However to truly understand the gravity of the phenomenon $\mathbf{b}$ has been replaced with 
+\begin{equation}
+\mathbf{r_0} = \begin{pmatrix}
+\xi \\ \eta \\ 1 \\
+\end{pmatrix}.
+\end{equation}
+If $\xi \text{ and } \eta \in [-10,10]$ the plots shown in figures~\ref{fig:fig2} and \ref{fig:fig4}. Can be computed, which are the same as figure 2 and 4, if the different coloring is neglected. These plots show the residual of the two schemes after 30 iterations on a logarithmic scale. Blue ares indicate convergence. 
 
 \begin{figure}
 \input{../src/figure/fig1Conv.tex}
@@ -9,18 +45,80 @@
 
 \begin{figure}
 \centering
-\includegraphics[width=0.49\linewidth]{../src/figure/fig2Matp1}
-\includegraphics[width=0.49\linewidth]{../src/figure/fig2Matp2}
+\includegraphics[width=0.45\linewidth]{../src/figure/fig2Matp1}
+\includegraphics[width=0.45\linewidth]{../src/figure/fig2Matp2}
 \caption{Plot as seen in the Embree paper GMRES(1)(left) and GMRES(2)(right) in figure two.}
 \label{fig:fig2}
 \end{figure}
 
-
 \begin{figure}
 \centering
-\includegraphics[width=0.49\linewidth]{../src/figure/fig4Matp2}
-\includegraphics[width=0.49\linewidth]{../src/figure/fig4Matp1}
+\includegraphics[width=0.45\linewidth]{../src/figure/fig4Matp2}
+\includegraphics[width=0.45\linewidth]{../src/figure/fig4Matp1}
 \caption{Plot as seen in the Embree paper for GMRES(1)(left) and GMRES(2)(right) in figure 4.}
 \label{fig:fig4}
 \end{figure}
+
+\subsection{Additional experiments}
+If $A - 0.35*\mathbf{I}$ is considered the condition number changes from $\kappa(\mathbf{A}) = 14.2950$ to  $\kappa(\mathbf{A} - 0.35*\mathbf{I}) = 39.1873$. At the same time the convergent area of \texttt{GMRES(1)} shown in figure~\ref{fig:modA}, shrinks considerably in comparison to the plot~\ref{fig:fig2}. Additionally as the conditioning worsened the white foggy areas without convergence grew significantly. 
+\begin{figure}
+\centering
+\includegraphics[width=0.45\linewidth]{../src/figure/Am0p35eyeGMRES1}
+\includegraphics[width=0.45\linewidth]{../src/figure/Am0p35eyeGMRES2}
+\caption{\texttt{GMRES(1)} and \texttt{GMRES(2)} convergence on $\mathbf{A} - 0.35 \cdot \mathbf{I}$.  } 
+\label{fig:modA}
+\end{figure}
+
+In a second series of experiments, designed to further investigate the effect of changed conditioning, $\mathbf{A}$ will be filled with entries drawn from the standart normal distribution ($\mu = 0$, $\sigma^2 = 1$). The values turned out to be:
+\begin{equation}
+\mathbf{R} = \begin{pmatrix}
+-0.3034 &   0.8884 &  -0.8095 \\
+ 0.2939 &  -1.1471 &  -2.9443 \\
+-0.7873 &  -1.0689 &   1.4384 \\
+\end{pmatrix} 
+\end{equation}
+Results for \texttt{GMRES(1)} and \texttt{GMRES(2)}. Are shown in figure \ref{fig:randAGMRES2}. Here it can be observed, that \texttt{GMRES(2)}, converges for all possible right hand sides $\mathbf{b}$, while \texttt{GMRES(1)} does not. This is probably the more common, but mathematically less interesting case. Often convergence improves significantly if the identity matrix is added to A. Unfortunately the condition number got worse by adding one multiple of the identity. It increased from $\kappa(\mathbf{R})=5.1025$ to $\kappa(\mathbf{R} + \mathbf{I})=32.4770$. Adding two dimes the identity matrix makes matters even worse as $\kappa(\mathbf{R} + 2\mathbf{I})=77.5446$, with results shown in figure~\ref{fig:randAp2eyeGMRES2}. Finally adding three times the identity leads to $\kappa(\mathbf{R} + 3\mathbf{I})=6.4262$ and complete convergence for both algorithms figure~\ref{fig:randAp3eyeGMRES2}. However the conditioning is still worse then it was originally, which indicates that conditioning alone can not be used to predict \texttt{GMRES(m)} convergence. 
+
+\begin{figure}
+\centering
+\includegraphics[width=0.45\linewidth]{../src/figure/randAGMRES1}
+\includegraphics[width=0.45\linewidth]{../src/figure/randAGMRES2}
+\caption{Convergence of \texttt{GMRES(1)}(left) and \texttt{GMRES(2)}(right) for the random matrix $\mathbf{R}$.}
+\label{fig:randAGMRES2}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=0.45\linewidth]{../src/figure/randAp2eyeGMRES1}
+\includegraphics[width=0.45\linewidth]{../src/figure/randAp2eyeGMRES2}
+\caption{Convergence results for $\mathbf{R} + 2\mathbf{I}$}
+\label{fig:randAp2eyeGMRES2}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=0.45\linewidth]{../src/figure/randAp3eyeGMRES2}
+\includegraphics[width=0.45\linewidth]{../src/figure/randAp3eyeGMRES2}
+\caption{Convergence results for $\mathbf{R} + 3\mathbf{I}$}
+\label{fig:randAp3eyeGMRES2}
+\end{figure}
+
+\subsection{Two-Dimensional case}
+At the end of the paper Embree proposes to take a closer look at:
+\begin{equation}
+\mathbf{C} = \begin{pmatrix}
+1 & -2 \\
+0 & 1 \\
+\end{pmatrix}
+\end{equation}
+This matrix displays similar noisy residuals in the bottom and top corners as where observed for \texttt{GMRES(1)} in figure~\ref{fig:fig4}.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.45\linewidth]{../src/figure/twoDPaper}
+\includegraphics[width=0.45\linewidth]{../src/figure/twoDZoom}
+\caption{A plot of the convergence plain for the matrix proposed at the end of Embree's paper. With zoom on an interesting region.}
+\label{fig:twoDZoom}
+\end{figure}
+
+
+
 
