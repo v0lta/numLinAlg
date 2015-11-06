@@ -34,12 +34,12 @@ Using series expressions as provided in the paper the convergence plots for \tex
 \xi \\ \eta \\ 1 \\
 \end{pmatrix}.
 \end{equation}
-If $\xi \text{ and } \eta \in [-10,10]$ the plots shown in figures~\ref{fig:fig2} and \ref{fig:fig4}. Can be computed, which are the same as figure 2 and 4, if the different coloring is neglected. These plots show the residual of the two schemes after 30 iterations on a logarithmic scale. Blue ares indicate convergence. 
+If $\xi \text{ and } \eta \in [-10,10]$ the plots shown in figures~\ref{fig:fig2} and \ref{fig:fig4}. Can be computed, which are the same as figure 2 and 4, if the different coloring is neglected. These plots show the residual of the two schemes after 30 iterations on a logarithmic scale. Blue areas indicate convergence. 
 
 \begin{figure}
 \input{../src/figure/fig1Conv.tex}
 \input{../src/figure/fig3Conv.tex}
-\caption{Convergence plot of GMRES(1) and GMRES(2). As seen in figure 1 and three of Embree's paper.}
+\caption{Convergence plot of GMRES(1) and GMRES(2). For matrix $\mathbf{A}$ (left), as seen in figure 1 of Embree's paper and for matrix $\mathbf{B}$ (right), as shown in figure three of Embree's paper.}
 \label{fig:ConvergenceFig1AndFig3}
 \end{figure}
 
@@ -47,7 +47,7 @@ If $\xi \text{ and } \eta \in [-10,10]$ the plots shown in figures~\ref{fig:fig2
 \centering
 \includegraphics[width=0.45\linewidth]{../src/figure/fig2Matp1}
 \includegraphics[width=0.45\linewidth]{../src/figure/fig2Matp2}
-\caption{Plot as seen in the Embree paper GMRES(1)(left) and GMRES(2)(right) in figure two.}
+\caption{Residual magnitude Plot for matrix $\mathbf{A}$, as seen in the Embree paper GMRES(1)(left) and GMRES(2)(right) in figure two.}
 \label{fig:fig2}
 \end{figure}
 
@@ -55,7 +55,7 @@ If $\xi \text{ and } \eta \in [-10,10]$ the plots shown in figures~\ref{fig:fig2
 \centering
 \includegraphics[width=0.45\linewidth]{../src/figure/fig4Matp2}
 \includegraphics[width=0.45\linewidth]{../src/figure/fig4Matp1}
-\caption{Plot as seen in the Embree paper for GMRES(1)(left) and GMRES(2)(right) in figure 4.}
+\caption{Residual magnitude Plot for matrix $\mathbf{B}$, as seen in the Embree paper for GMRES(1)(left) and GMRES(2)(right) in figure 4.}
 \label{fig:fig4}
 \end{figure}
 
@@ -108,14 +108,17 @@ At the end of the paper Embree proposes to take a closer look at:
 1 & -2 \\
 0 & 1 \\
 \end{pmatrix}
+\;\;\;
+\mathbf{r_0} = \begin{pmatrix} \xi \\ \eta \end{pmatrix}
 \end{equation}
-This matrix displays similar noisy residuals in the bottom and top corners as where observed for \texttt{GMRES(1)} in figure~\ref{fig:fig4}.
+The residuals show noisy convergence patterns in the bottom and top corners for \texttt{GMRES(1)} in figure~\ref{fig:fig4}. On the right side seemingly random patterns are shown at larger magnification.
+Similar ones appeared in figure \ref{fig:fig4} when zooming in. No plot exists for \texttt{GMRES(2)} is it always converged completely within two iterations. In fact for all of the approximately ten two by two matrices that where tried did \texttt{GMRES(2)} converge to the exact result.
 
 \begin{figure}
 \centering
 \includegraphics[width=0.45\linewidth]{../src/figure/twoDPaper}
 \includegraphics[width=0.45\linewidth]{../src/figure/twoDZoom}
-\caption{A plot of the convergence plain for the matrix proposed at the end of Embree's paper. With zoom on an interesting region.}
+\caption{A plot of the convergence plain for the matrix $\mathbf{C}$ proposed at the end of Embree's paper. With zoom on an interesting region.}
 \label{fig:twoDZoom}
 \end{figure}
 
