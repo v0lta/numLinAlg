@@ -1,6 +1,6 @@
-function [ xReg ] = tikhonov( A,b,ignorePct,plotting )
- %tikhonov( A,b,plotting )
-%use plain tikhonov regularization to find a solution.
+function [ xReg ] = dsvd( A,b,ignorePct,plotting )
+ %dsvd( A,b,plotting )
+ %use plain dsvd regularization to find a solution.
  %A - input Matrix     dimension n*n
  %b - right hand side  dimension n*1
  %plotting - logical true if plots are desired false if not.
@@ -15,8 +15,8 @@ function [ xReg ] = tikhonov( A,b,ignorePct,plotting )
      plotting = true;
  end
  if (nargin < 3)
-     disp('No filter parameter spefified using 15%');
-     ignorePct = 15;
+     disp('No filter parameter spefified using 95%');
+     ignorePct = 95;
  end
  
  
@@ -41,7 +41,7 @@ function [ xReg ] = tikhonov( A,b,ignorePct,plotting )
  for k = 1:n
      x = zeros(n,1);
      for i = 1:n
-        f = S(i,i)^2 / (S(i,i)^2 + lambda(k)^2); 
+        f = S(i,i) / (S(i,i) + lambda(k)); 
         x = x + f*((U(:,i)'*b)/S(i,i)) * V(:,i);   
      end
      regSolNorm(k) = norm(L*x);
