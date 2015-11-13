@@ -39,13 +39,15 @@ function [ xReg ] = tikhonov( A,b,ignorePct,plotting )
  
  
  for k = 1:n
+     sigma = diag(S);
 %      for i = 1:n
 %         f = S(i,i)^2 / (S(i,i)^2 + lambda(k)^2); 
 %         x = x + f*((U(:,i)'*b)/S(i,i)) * V(:,i);   
 %      end
-     sigma = diag(S);
      fVec = sigma.^2 ./ ( sigma.^2 + ones(n,1)*lambda(k).^2);
-     x =  sum(V*(diag(U'*b .* sigma.^(-1)))*diag(fVec),2);
+     F = diag(fVec);
+     x =  sum(V*(diag(U'*b .* sigma.^(-1)))*F,2);
+     %x = sum(U*F*diag(sigma.^(-1))*V'*b,2);
      regSolNorm(k) = norm(L*x);
      residlNorm(k) = norm(A*x - b);
      xVec(:,k) = x;
