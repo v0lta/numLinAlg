@@ -1,0 +1,102 @@
+\section{Results}
+\subsection{Tikhonov regularization}
+Tikhonov regularization can be implemented using the singular value decomposition of $\mathbf{A}$. The idea is to filter out the very small singular values, which are greatly influenced by the noise contribution using
+\begin{equation}
+\mathbf{x}_{reg} = \sum_{i=1}^{n}f_i \frac{\mathbf{u}_{i}^T b}{\sigma_i}\mathbf{v}_{i} .
+\label{eq:tikh}
+\end{equation}
+The filter factors $f_i$ are computed using
+\begin{equation}
+f_i = \sigma_i^2/(\sigma_i^2 + \lambda).
+\label{eq:filter}
+\end{equation}
+Where filtering takes place if $\sigma_i < \lambda$. On the other hand a singular value $\sigma$ remains unfiltered if $\sigma_i > \lambda$. 
+For this method to work it is essential to choose a good value for $\lambda$. 
+\subsubsection{The L-curve}
+The L-curve is a plot of the residual norm $\|\mathbf{Ax} - \mathbf{b}\|$ and the norm of the regularized solution $\|\mathbf{Lx}\|$. It displays the trade off between the fit to regularized data and the size of the solution and gives insight into the properties of the underlying regularization method.\footnote{The L-curve and its use in the numerical treatment of inverse problems, P. C. Hansen, Department of Mathematical Modelling, Technical University of Denmark, DK-2800 Lyngby, Denmark} Using Tikhonov regularization as described in equation~\ref{eq:tikh} and the filter of equation~\ref{eq:filter}. The plots in figure~\ref{fig:A1LTihk} have been computed. 
+\begin{figure}
+\centering
+\input{../src/figures/fittingQuality.tex}
+\caption{The l-curve in relation to curve fitting problems. On the left a known curve $\mathbf{b}_{true}$ is shown in blue. $\mathbf{b} = \mathbf{b}_{true} + \mathbf{b}_{noise}$ is shown in red. The right plot shows efforts to recover the noise free solution. The effects of no filtering (blue, $\|\mathbf{Ax}\| = 21.77$, $\|\mathbf{Ax}-\mathbf{b}_{true}\| =7.59$), optimal filtering (red, $\|\mathbf{Ax}\| = 19.44$, $\|\mathbf{Ax}-\mathbf{b}_{true}\| = 3.33$) and over-damping (yellow, $\|\mathbf{Ax}\| =  18.3362$, $\|\mathbf{Ax}-\mathbf{b}_{true}\| = 5.08$) are shown.} 
+\label{fig:knownFitFilt}
+\end{figure} 
+\begin{figure}
+\centering
+\input{../src/figures/normPlotA1LTikh.tex}
+\input{../src/figures/LcurveA1Tihk.tex}
+\input{../src/figures/LA1Tikhcurvature.tex}
+\caption{Plots of $\|\mathbf{Ax} - \mathbf{b}\|$, $\|\mathbf{Lx}\|$ and the curvature of the L-curve $\kappa$. For the given \texttt{A1}, \texttt{berr1} pair.} 
+\label{fig:A1LTihk}
+\end{figure} 
+We are interested in obtaining a result as close to the noise free example as possible. The trade off shown in the L-curve above is illustrated in another way in Figure~\ref{fig:knownFitFilt}.\footnote{following a similar example in: The L-curve and its use in the numerical treatment of inverse problems, P. C. Hansen} When choosing a good filter parameter it is important to remove noise contributions, which is done by minimizing $\|\mathbf{Lx}\|$, while at the same time making sure that the data points are still being followed in a satisfactory way, which is done by keeping $\|\mathbf{Ax} - \mathbf{b}\|$ as small as possible. In practice $\mathbf{b}_{true}$ is unknown, it has been used in the experiment shown in figure~\ref{fig:knownFitFilt} only to verify that the l-curve criterion which as been computed using the noisy $\mathbf{b}$ is indeed working. 
+The optimal point can be found at the pointy edge of the L-curve, in most cases the curvature will display a maximal value here as well. Following Hansen once more the curvature $\kappa$ has been computed using\footnote{The L-curve and its use in the numerical treatment of inverse problems, P. C. Hansen}
+\begin{equation}
+\kappa = 2 \cdot \frac{\hat{\rho}'\hat{\eta}''- \hat{\rho}''\hat{\eta}' }{((\hat{\rho}')^2)+ (\hat{\eta}')^2)^{3/2} }.
+\end{equation}
+with $\hat{\eta} = log(\|x_{\lambda}\|_2^2)$ and $\hat{\rho} = log(\|Ax_{\lambda} - b\|_2^2)$. The derivatives have been implemented by simply using right forward differences
+\begin{equation}
+\hat{\rho}' = \frac{(\hat{\rho}_{k+1} - \hat{\rho}_{k})}{(\lambda_{k+1} - \lambda_{k})}.
+\end{equation}
+For the second derivatives the same process has simply been applied again. $\hat{\eta}'$ and $\hat{\eta}''$ have been computed in the same manner. The plot of the curvature which has been obtained by using the formulas above is shown in figure~\ref{fig:A1LTihk} in the bottom left. In all plots in the figure the location of the maximum of $\kappa$ has been indicated with stars(*). It is important to notice that $\lambda$ increases when following the L-curve from the top left to the bottom right.
+\begin{figure}
+\input{../src/figures/LcurveA2Tihk.tex}
+\input{../src/figures/LcurveKappaA2Tihk.tex}
+\caption{Tikhonov regularization L-curve and curvature for the matrix $\mathbf{A}_{2}$ and vector $\mathbf{b}_{err2}$.}
+\label{fig:A2Tikh}
+\end{figure}
+\begin{figure}
+\input{../src/figures/LcurveA3Tihk.tex}
+\input{../src/figures/LcurveKappaA3Tihk.tex}
+\caption{Tikhonov regularization, L-curve and curvature for the matrix $\mathbf{A}_{3}$ and vector $\mathbf{b}_{err3}$.}
+\label{fig:A3Tikh}
+\end{figure}
+\begin{figure}
+\input{../src/figures/LcurveA4Tihk.tex}
+\input{../src/figures/LcurveKappaA4Tihk.tex}
+\caption{Tikhonov regularization, L-curve and curvature for the matrix $\mathbf{A}_{4}$ and vector $\mathbf{b}_{err4}$.}
+\label{fig:A4Tikh}
+\end{figure}
+\begin{figure}
+\input{../src/figures/LcurveA5Tihk.tex}
+\input{../src/figures/LcurveKappaA5Tihk.tex}
+\caption{Tikhonov regularization, L-curve and curvature for the matrix $\mathbf{A}_{5}$ and vector $\mathbf{b}_{err5}$.}
+\label{fig:A5Tikh}
+\end{figure}
+\begin{figure}
+\input{../src/figures/LcurveA6Tihk.tex}
+\input{../src/figures/LcurveKappaA6Tihk.tex}
+\caption{Tikhonov regularization, L-curve and curvature for the matrix $\mathbf{A}_{6}$ and vector $\mathbf{b}_{err6}$.}
+\label{fig:A6Tikh}
+\end{figure}
+Figure~\ref{fig:A2Tikh} shows a more dubious case. For the given matrix $\mathbf{A}_2$ the L-curve displays two edges. The selection criterion now chooses the edge at the bottom as it curvier then the previous one. However maybe the emphasis should have been to reduce the residual instead of the solution norm. In that case the previous edge should have been selected. This example shows that selection by curvature is not free of flaws, it tends to oversmooth the solution in this case. Figures~\ref{fig:A4Tikh}, \ref{fig:A5Tikh} and \ref{fig:A6Tikh} show more examples where the L-curve criterion performs very well. However there is an absentee. Matrix $\mathbf{A}_{3}$ is missing. Here the L-curve's edged is not found exactly by the curvature based selection criterion, this example will be solved using GCV, which as explained in the next section.
+
+\subsection{Generalized Cross validation (GCV)}
+\begin{figure}
+\centering
+\input{../src/figures/gcvPlotA1.tex}
+\input{../src/figures/gcvPlotA3.tex}
+\caption{Plot of the value of the GCV-function for different values of $\lambda$ for the $\mathbf{A}_1, \mathbf{b}_{err1}$ and the $\mathbf{A}_3, \mathbf{b}_{err3}$ pair.}
+\label{fig:GCVA1}
+\end{figure}
+An other way to find a suitable regularization parameter is generalized cross validation. When this method is used the function
+\begin{equation}
+G = \frac{\| \mathbf{Ax}_{reg} - b \|^2_2}{(\text{trace}(\mathbf{I}_m - mathbf{AA}^I))^2}
+\end{equation}
+is minimized. With $\mathbf{x}_{reg}$ defined as in equation~\ref{eq:tikh}. The trace of the denominator can be simplified to:
+\begin{eqnarray}
+\text{trace}(\mathbf{I}_m) - \text{trace}(\mathbf{AA}^I) & \text{assuming symmetrie} \\
+= n - \text{trace}(\mathbf{A}^T \mathbf{A}^I) \\
+= n - \text{trace}(\mathbf{V}\mathbf{\Sigma}^T \mathbf{U}^T \mathbf{U}\mathbf{F}\mathbf{\Sigma}^{-1} \mathbf{V}^T) & \text{svd} \\
+= n - \text{trace}(\mathbf{V}^T \mathbf{V}\mathbf{\Sigma}^T \mathbf{F}\mathbf{\Sigma}^{-1} ) & \text{cyclic rotation} \\
+= n - \text{trace}(\mathbf{\Sigma}^{-1}\mathbf{\Sigma} \mathbf{F} ) & \text{cyclic rotation} \\
+= n - \text{trace}(\mathbf{F} ) & \text{F is diagonal}  \\
+= n - \text{sum}(\mathbf{F})
+\end{eqnarray}
+With $\mathbf{F}$ being a matrix with the filter factor on the diagonal. The reasoning described above is used to compute the GCV function efficiently.
+\begin{figure}
+\centering
+\input{../src/figures/comparisonLGCV.tex}
+\caption{Plot of the lambdas selected by the L-curve curvature criterion and generalized cross validation.}
+\label{fig:comparisonLGCV}
+\end{figure}
+A comparison of the $\lambda$ values selected by the L-curve curvature criterion and GCV is given in figure~\ref{fig:comparisonLGCV}. For the first problem both methods select almost the same value. In two an three the value selected by the L-curve curvature criterion is significantly larger then what is chosen by the GCV criterion and what a human would have selected. In these six examples this generally happens when the value of the maximum of the $\kappa$ curve is not very large. In these cases GCV should be preferred.

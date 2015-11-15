@@ -1,0 +1,60 @@
+% This file was created by matlab2tikz.
+% Minimal pgfplots version: 1.3
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\documentclass[tikz]{standalone}
+\usepackage{pgfplots}
+\usepackage{grffile}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{plotmarks}
+\usepackage{amsmath}
+
+\begin{document}
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=2in,
+height=2in,
+at={(0.771875in,0.483542in)},
+scale only axis,
+xmin=1,
+xmax=6,
+xlabel={problem no.},
+ymode=log,
+ymin=1e-05,
+ymax=0.1,
+yminorticks=true,
+ylabel={$\lambda$},
+legend style={legend cell align=left,align=left,draw=white!15!black}
+]
+\addplot [color=mycolor1,only marks,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+1	0.000700429712987355\\
+2	0.0925364518699232\\
+3	0.0622026861633196\\
+4	0.000577706308768941\\
+5	2.38626985222061e-05\\
+6	5.98062478687114e-05\\
+};
+\addlegendentry{L-curve};
+
+\addplot [color=mycolor2,only marks,mark=asterisk,mark options={solid}]
+  table[row sep=crcr]{%
+1	0.000702695221786386\\
+2	0.00124023200120442\\
+3	0.000975298695663297\\
+4	0.000726454189092671\\
+5	4.02258506472218e-05\\
+6	0.00211845786003602\\
+};
+\addlegendentry{GCV};
+
+\end{axis}
+\end{tikzpicture}%
+\end{document}

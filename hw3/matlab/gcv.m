@@ -11,13 +11,14 @@ function [ G ] = gcv( lambda,U,S,V,A,b )
 
  %G = norm(A*x - b)^2 / (trace(eye(size(A)) - A*A'))^2;
  %compute x
- for i = 1:n
-     f = S(i,i)^2 / (S(i,i)^2 + lambda^2); 
-     x = x + f*((U(:,i)'*b)/S(i,i)) * V(:,i);   
- end
+ sigma = diag(S);
+ fVec = sigma.^2 ./ ( sigma.^2 + ones(n,1)*lambda.^2);
+ F = diag(fVec);
+ x =  sum(V*(diag(U'*b .* sigma.^(-1)))*F,2);
+ %x = sum(U*F*diag(sigma.^(-1))*V'*b,2);     %numerically unpleasant.
  
  %denominator from SVD properties.
- denom = n - sum(diag(S).^2*f);
+ denom = n - sum(fVec);
  G = norm(A*x - b)^2 / denom^2;
  
 end

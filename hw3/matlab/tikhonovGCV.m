@@ -16,7 +16,7 @@ function [ xReg ] = tikhonovGCV( A,b)
  [U,S,V] = svd(A);
   
  %% find the regularization parameter.
- lambda = fminbnd(@(f) gcv(f,U,S,V,A,b),S(end,end),S(1,1));
+ lambda = fminbnd(@(f) gcv(f,U,S,V,A,b),S(end,end),S(1,1))
  
 
  xReg = zeros(n,1);

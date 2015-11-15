@@ -1,6 +1,6 @@
-function [ xReg ] = tikhonov( A,b,ignorePct,plotting )
+function [ xReg,lambda ] = tikhonov( A,b,ignorePct,plotting )
  %tikhonov( A,b,plotting )
-%use plain tikhonov regularization to find a solution.
+ %use plain tikhonov regularization to find a solution.
  %A - input Matrix     dimension n*n
  %b - right hand side  dimension n*1
  %plotting - logical true if plots are desired false if not.
@@ -94,7 +94,7 @@ function [ xReg ] = tikhonov( A,b,ignorePct,plotting )
     figure(2)
     loglog(residlNorm,regSolNorm)
     hold on;
-    loglog(residlNorm(I),regSolNorm(I),'*')
+    loglog(residlNorm((I)),regSolNorm((I)),'*')
     xlabel('$\|\mathbf{Ax} - \mathbf{b}\|$','Interpreter','LaTex')
     ylabel('$\|\mathbf{Lx}\|$','Interpreter','LaTex')
     hold off; 
@@ -109,6 +109,7 @@ function [ xReg ] = tikhonov( A,b,ignorePct,plotting )
  end
 
  xReg = xVec(:,I);
+ lambda = lambda(I);
 
 end
 
