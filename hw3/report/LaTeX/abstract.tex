@@ -1,5 +1,5 @@
 \section{Abstract}
-This report deals with methods to handle perturbations to the right hand side of $\mathbf{Ax} = \mathbf{b}$. Precisely an additional noise contribution is added to $\mathbf{b}$ such that $\mathbf{b} = \mathbf{b_{exact}} + \alpha \cdot \mathbf{b_{noise}}$. Where $\mathbf{b_{noise}}$ is a vector with entries drawn from the standard normal distribution $\mathcal{N}(0,1)$. 
+This report deals with methods to handle perturbations to the right hand side of $\mathbf{Ax} = \mathbf{b}$. Precisely an additional noise contribution is added to $\mathbf{b}$ such that $\mathbf{b} = \mathbf{b_{exact}} + \alpha \cdot \mathbf{b_{noise}}$. Where $\mathbf{b_{noise}}$ is a vector with entries drawn from the standard normal distribution $\mathcal{N}(0,1)$ so effectively noise with the distribution $\mathcal{N}(0,\alpha^2)$ is added. 
 The process of recovering $\mathbf{x_{reg}} \approx \mathbf{A}^{-1} \mathbf{b}_{exact}$ as precisely as possible is called regularization. Tikhonov regularization, TSVD and conjugate gradient methods will be applied and their regularization properties compared.
 The first two methods require a regularization parameter $\lambda$. It can be obtained using for example the L-curve criterion or generalized cross-validation (GCV). Both methods will be explored further.
 

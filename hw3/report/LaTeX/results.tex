@@ -11,13 +11,21 @@ f_i = \sigma_i^2/(\sigma_i^2 + \lambda).
 \label{eq:filter}
 \end{equation}
 Where filtering takes place if $\sigma_i < \lambda$. On the other hand a singular value $\sigma$ remains unfiltered if $\sigma_i > \lambda$. 
+The equations above can be implemented without a \texttt{for} loop in matlab:
+\begin{lstlisting}[language=matlab]
+     [U,S,V] = svd(A)
+     sigma = diag(S);
+     fVec = sigma.^2 ./ ( sigma.^2 + ones(n,1)*lambda.^2);
+     F = diag(fVec);
+     x = sum(U*F*diag(sigma.^(-1))*V'*b,2);
+\end{lstlisting}
 For this method to work it is essential to choose a good value for $\lambda$. 
 \subsubsection{The L-curve}
 The L-curve is a plot of the residual norm $\|\mathbf{Ax} - \mathbf{b}\|$ and the norm of the regularized solution $\|\mathbf{Lx}\|$. It displays the trade off between the fit to regularized data and the size of the solution and gives insight into the properties of the underlying regularization method.\footnote{The L-curve and its use in the numerical treatment of inverse problems, P. C. Hansen, Department of Mathematical Modelling, Technical University of Denmark, DK-2800 Lyngby, Denmark} Using Tikhonov regularization as described in equation~\ref{eq:tikh} and the filter of equation~\ref{eq:filter}. The plots in figure~\ref{fig:A1LTihk} have been computed. 
 \begin{figure}
 \centering
 \input{../src/figures/fittingQuality.tex}
-\caption{The l-curve in relation to curve fitting problems. On the left a known curve $\mathbf{b}_{true}$ is shown in blue. $\mathbf{b} = \mathbf{b}_{true} + \mathbf{b}_{noise}$ is shown in red. The right plot shows efforts to recover the noise free solution. The effects of no filtering (blue, $\|\mathbf{Ax}\| = 21.77$, $\|\mathbf{Ax}-\mathbf{b}_{true}\| =7.59$), optimal filtering (red, $\|\mathbf{Ax}\| = 19.44$, $\|\mathbf{Ax}-\mathbf{b}_{true}\| = 3.33$) and over-damping (yellow, $\|\mathbf{Ax}\| =  18.3362$, $\|\mathbf{Ax}-\mathbf{b}_{true}\| = 5.08$) are shown.} 
+\caption{The L-curve in relation to curve fitting problems. On the left a known curve $\mathbf{b}_{true}$ is shown in blue. $\mathbf{b} = \mathbf{b}_{true} + \mathbf{b}_{noise}$ is shown in red. The right plot shows efforts to recover the noise free solution. The effects of no filtering (blue, $\|\mathbf{Ax}\| = 21.77$, $\|\mathbf{Ax}-\mathbf{b}_{true}\| =7.59$), optimal filtering (red, $\|\mathbf{Ax}\| = 19.44$, $\|\mathbf{Ax}-\mathbf{b}_{true}\| = 3.33$) and over-damping (yellow, $\|\mathbf{Ax}\| =  18.3362$, $\|\mathbf{Ax}-\mathbf{b}_{true}\| = 5.08$) are shown.} 
 \label{fig:knownFitFilt}
 \end{figure} 
 \begin{figure}
@@ -28,8 +36,8 @@ The L-curve is a plot of the residual norm $\|\mathbf{Ax} - \mathbf{b}\|$ and th
 \caption{Plots of $\|\mathbf{Ax} - \mathbf{b}\|$, $\|\mathbf{Lx}\|$ and the curvature of the L-curve $\kappa$. For the given \texttt{A1}, \texttt{berr1} pair.} 
 \label{fig:A1LTihk}
 \end{figure} 
-We are interested in obtaining a result as close to the noise free example as possible. The trade off shown in the L-curve above is illustrated in another way in Figure~\ref{fig:knownFitFilt}.\footnote{following a similar example in: The L-curve and its use in the numerical treatment of inverse problems, P. C. Hansen} When choosing a good filter parameter it is important to remove noise contributions, which is done by minimizing $\|\mathbf{Lx}\|$, while at the same time making sure that the data points are still being followed in a satisfactory way, which is done by keeping $\|\mathbf{Ax} - \mathbf{b}\|$ as small as possible. In practice $\mathbf{b}_{true}$ is unknown, it has been used in the experiment shown in figure~\ref{fig:knownFitFilt} only to verify that the l-curve criterion which as been computed using the noisy $\mathbf{b}$ is indeed working. 
-The optimal point can be found at the pointy edge of the L-curve, in most cases the curvature will display a maximal value here as well. Following Hansen once more the curvature $\kappa$ has been computed using\footnote{The L-curve and its use in the numerical treatment of inverse problems, P. C. Hansen}
+We are interested in obtaining a result as close to the noise free data as possible. The trade off shown in the L-curve is illustrated in another way in figure~\ref{fig:knownFitFilt}.\footnote{following a similar example in: The L-curve and its use in the numerical treatment of inverse problems, P. C. Hansen} When choosing a good filter parameter it is important to remove noise contributions, which is done by minimizing $\|\mathbf{Lx}\|$, while at the same time making sure that the data points are still being followed in a satisfactory way, which is done by keeping $\|\mathbf{Ax} - \mathbf{b}\|$ as small as possible. In practice $\mathbf{b}_{true}$ is unknown, it has been used in the experiment shown in figure~\ref{fig:knownFitFilt} only to verify that the L-curve criterion which has been computed using the noisy $\mathbf{b}$ is indeed working. 
+The optimal point can be found at the pointy edge of the L-curve, ideally the curvature will display a maximal value here. Following Hansen once more the curvature $\kappa$ has been computed using\footnote{The L-curve and its use in the numerical treatment of inverse problems, P. C. Hansen}
 \begin{equation}
 \kappa = 2 \cdot \frac{\hat{\rho}'\hat{\eta}''- \hat{\rho}''\hat{\eta}' }{((\hat{\rho}')^2)+ (\hat{\eta}')^2)^{3/2} }.
 \end{equation}
@@ -68,7 +76,8 @@ For the second derivatives the same process has simply been applied again. $\hat
 \caption{Tikhonov regularization, L-curve and curvature for the matrix $\mathbf{A}_{6}$ and vector $\mathbf{b}_{err6}$.}
 \label{fig:A6Tikh}
 \end{figure}
-Figure~\ref{fig:A2Tikh} shows a more dubious case. For the given matrix $\mathbf{A}_2$ the L-curve displays two edges. The selection criterion now chooses the edge at the bottom as it curvier then the previous one. However maybe the emphasis should have been to reduce the residual instead of the solution norm. In that case the previous edge should have been selected. This example shows that selection by curvature is not free of flaws, it tends to oversmooth the solution in this case. Figures~\ref{fig:A4Tikh}, \ref{fig:A5Tikh} and \ref{fig:A6Tikh} show more examples where the L-curve criterion performs very well. However there is an absentee. Matrix $\mathbf{A}_{3}$ is missing. Here the L-curve's edged is not found exactly by the curvature based selection criterion, this example will be solved using GCV, which as explained in the next section.
+
+Figure~\ref{fig:A2Tikh} shows a more dubious case. For the given matrix $\mathbf{A}_2$ the L-curve displays two edges. The selection criterion now chooses the edge at the bottom as it is curvier then the previous one. However maybe the emphasis should have been to reduce the residual instead of the solution norm. In that case the previous edge should have been selected. This example shows that selection by curvature is not free of flaws, it tends to oversmooth the solution in this case. Figures~\ref{fig:A4Tikh}, \ref{fig:A5Tikh} and \ref{fig:A6Tikh} show more examples where the L-curve criterion performs very well. However there is an absentee. Matrix $\mathbf{A}_{3}$ is missing. Here the L-curve's edged is not found exactly by the curvature based selection criterion, this example will be solved using GCV, which as explained in the next section.
 
 \subsection{Generalized Cross validation (GCV)}
 \begin{figure}
@@ -80,11 +89,11 @@ Figure~\ref{fig:A2Tikh} shows a more dubious case. For the given matrix $\mathbf
 \end{figure}
 An other way to find a suitable regularization parameter is generalized cross validation. When this method is used the function
 \begin{equation}
-G = \frac{\| \mathbf{Ax}_{reg} - b \|^2_2}{(\text{trace}(\mathbf{I}_m - mathbf{AA}^I))^2}
+G = \frac{\| \mathbf{Ax}_{reg} - \mathbf{b} \|^2_2}{(\text{trace}(\mathbf{I}_m - \mathbf{AA}^I))^2}
 \end{equation}
 is minimized. With $\mathbf{x}_{reg}$ defined as in equation~\ref{eq:tikh}. The trace of the denominator can be simplified to:
 \begin{eqnarray}
-\text{trace}(\mathbf{I}_m) - \text{trace}(\mathbf{AA}^I) & \text{assuming symmetrie} \\
+\text{trace}(\mathbf{I}_m) - \text{trace}(\mathbf{AA}^I) & \text{assuming symmetry} \\
 = n - \text{trace}(\mathbf{A}^T \mathbf{A}^I) \\
 = n - \text{trace}(\mathbf{V}\mathbf{\Sigma}^T \mathbf{U}^T \mathbf{U}\mathbf{F}\mathbf{\Sigma}^{-1} \mathbf{V}^T) & \text{svd} \\
 = n - \text{trace}(\mathbf{V}^T \mathbf{V}\mathbf{\Sigma}^T \mathbf{F}\mathbf{\Sigma}^{-1} ) & \text{cyclic rotation} \\
@@ -92,7 +101,7 @@ is minimized. With $\mathbf{x}_{reg}$ defined as in equation~\ref{eq:tikh}. The 
 = n - \text{trace}(\mathbf{F} ) & \text{F is diagonal}  \\
 = n - \text{sum}(\mathbf{F})
 \end{eqnarray}
-With $\mathbf{F}$ being a matrix with the filter factor on the diagonal. The reasoning described above is used to compute the GCV function efficiently.
+With $\mathbf{F}$ being a matrix with the filter factors on the diagonal. The reasoning described above is used to compute the GCV function efficiently.
 \begin{figure}
 \centering
 \input{../src/figures/comparisonLGCV.tex}
@@ -100,3 +109,91 @@ With $\mathbf{F}$ being a matrix with the filter factor on the diagonal. The rea
 \label{fig:comparisonLGCV}
 \end{figure}
 A comparison of the $\lambda$ values selected by the L-curve curvature criterion and GCV is given in figure~\ref{fig:comparisonLGCV}. For the first problem both methods select almost the same value. In two an three the value selected by the L-curve curvature criterion is significantly larger then what is chosen by the GCV criterion and what a human would have selected. In these six examples this generally happens when the value of the maximum of the $\kappa$ curve is not very large. In these cases GCV should be preferred.
+
+\subsection{Picard condition}
+The Picard condition states that the Fourier coefficients $| \mathbf{u}_i^T \mathbf{b}|$ have to decay faster then the singular values. If this condition is satisfied, then one has every reason to believe that $\mathbf{x}_{reg}$ approximates the true $\mathbf{x}$ well.Figures~\ref{fig:picard12},\ref{fig:picard34},\ref{fig:picard56} show that regularization is necessary as the Fourier coefficients violate the Picard condition.  Additionally all solutions where the singular values have been filtered using Tikhonov regularization adhere to the Picard condition, which indicated that regularization was successful.
+
+\begin{figure}
+\input{../src/figures/picard1.tex}
+\input{../src/figures/picard2.tex}
+\caption{Plot of Fourier coefficients and singular values for the first $\mathbf{A}_1, \mathbf{b}_{err1}$ and second $\mathbf{A}_2, \mathbf{b}_{err2}$ value pair .}
+\label{fig:picard12}
+\end{figure}
+\begin{figure}
+\input{../src/figures/picard3.tex}
+\input{../src/figures/picard4.tex}
+\caption{Plot of Fourier coefficients and singular values for the third $\mathbf{A}_3,\mathbf{b}_{err3}$ and fourth $\mathbf{A}_4, \mathbf{b}_{err4}$ value pair .}
+\label{fig:picard34}
+\end{figure}
+\begin{figure}
+\input{../src/figures/picard5.tex}
+\input{../src/figures/picard6.tex}
+\caption{Plot of Fourier coefficients and singular values for the fifth $\mathbf{A}_5, \mathbf{b}_{err5}$ and sixth $\mathbf{A}_6, \mathbf{b}_{err6}$ value pair .}
+\label{fig:picard56}
+\end{figure}
+
+
+\subsection{DSVD}
+A modification of the filter function given in equation~\ref{eq:filter} to
+\begin{equation}
+f_i = \frac{\sigma_i}{\sigma_i + \lambda}
+\label{eq:filt2}
+\end{equation}
+gives the damped svd, which introduces less filtering. However the same effect can also be achived by reducing the regularization parameter. Filtering following equation~\ref{eq:filt2} has the drawback that often the L-curve is very noisy, which leads to curvature selection often incorrectly selecting a noise spike instead of the proper edge of the L-curve.
+Therefore dsvd has not been pursued further.
+A different approach is to truncate the svd after if the singular values are smaller the regularization parameter. Working with unfiltered matrices until they become stable will also lead to a noisy L-curve and has therefore not been pursued further.
+  
+\subsection{Conjugate gradients}
+When solving normalized problems ($\mathbf{A}^T\mathbf{Ax} = \mathbf{A}^T\mathbf{b}$) using the conjugate gradient (CG) algorithm solution components associated with large singular values appear first. While running the CG-algorithm the damping decreases from only using the largest singular values initially to using more and more in higher iterations. The listing below shows the way CG was implemented:
+\begin{lstlisting}[language=Matlab]
+it = length(b);
+r = A'*b;
+p = r;
+x = 0*p;
+rsOld = r'*r;
+for n = 1:it
+    Asp = A'*(A*p);            % form A'*A without computing A'*A.
+    vAlpha = rsOld/(p'*Asp);    % step length.
+    x = x + vAlpha*p;           % approximate solution.
+    r = r - vAlpha*Asp;         % residual
+    rsNew = r'*r;
+    vBeta = (rsNew)/(rsOld);    % improvement of previous step.
+    p = r + vBeta*p;            % search direction.
+    
+    rsOld = rsNew;             % squared residual update.
+    
+    xVec(:,n) = x;                % store the solution
+    resNormVec(n) = norm(A*x-b);  % compute residual norm.
+    solNormVec(n) = norm(x);    % compute the solution norm.
+end
+\end{lstlisting}
+The code snipped above shows that in each iteration the residual norm and size of the solution are recoded. Observing the behavior of the algorithm reveals that  
+
+Figure~\ref{fig:cgA1} shows the results obtained from running the CG-algorithms on the $\mathbf{A}_1, \mathbf{b}_{err1}$ pair. In comparison to figure~\ref{fig:A1LTihk} CG performs equally well as Thikonov regularization. The regularization parameter with CG is the number of iterations. As the norm values for both norms are not continuous, using the L-curve criterion for selecting a suitable number of iterations is difficult, as it is very hard to find the edge of the L-curve. Using filtered approximations of the norm functions as shown in figure~\ref{fig:cgA1} on the left leads to the smoothed L-curve shown in figure~\ref{fig:Lsmooth}. A meaningful curvature function can now be computed. The approximated edge of the L is indicated by a star as before.
+\begin{figure}
+\input{../src/figures/cgA1.tex}
+\input{../src/figures/cgLA1.tex}
+\caption{Result of conjugate gradient iterations on the $\mathbf{A}_1$, $\mathbf{b}_{err1}$ pair. 
+The yellow and purple lines show smoothed version of the orange and blue lines.}
+\label{fig:cgA1}
+\end{figure}
+\begin{figure}
+\input{../src/figures/cgLSmoothA1.tex}
+\input{../src/figures/cgKappaSmoothA1.tex}
+\caption{Smoothed L-curve and $\kappa$ of this new L-curve.}
+\label{fig:Lsmooth}
+\end{figure}
+\begin{figure}
+\centering
+\input{../src/figures/cgLA2.tex}
+\input{../src/figures/cgLA3.tex}
+\input{../src/figures/cgLA4.tex}
+\input{../src/figures/cgLA5.tex}
+\input{../src/figures/cgLA6.tex}
+\caption{L-curve plots of the original CG-results on the five remaining pairs in increasing order, with edge approximation indicated by a star. The approximation comes from smoothed data, which is not shown.}
+\label{fig:cgRest}
+\end{figure}
+L curve plots from CG application to the remaining five data sets are shown in figure~\ref{fig:cgRest}. L-curve shapes only appear for the sets two, three and four. For $\mathbf{A}_5, \mathbf{b}_{err5}$ and $\mathbf{A}_6, \mathbf{b}_{err6}$ the curve is an inverted A. Which indicates that the conjugate gradient method can only minimize residual only if $\|\mathbf{Lx}\|$ becomes large, which implies undesired tracking of the noise contributions.  
+For $\mathbf{A}_2, \mathbf{b}_{err2}$, $\mathbf{A}_3, \mathbf{b}_{err3}$ and $\mathbf{A}_4, \mathbf{b}_{err4}$, the CG-algorithms produces an L-shaped curve. 
+For the second case the reduction of the solution norm is insufficient. In the third and fourth case results are comparable to Thikonov regularization, however the approximations of the proper number of iterations could be more precise.
+

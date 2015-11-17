@@ -3,7 +3,8 @@ function [ xReg,lambda ] = tikhonov( A,b,ignorePct,plotting )
  %use plain tikhonov regularization to find a solution.
  %A - input Matrix     dimension n*n
  %b - right hand side  dimension n*1
- %plotting - logical true if plots are desired false if not.
+ %ignorePct - (optional) choose larger starting value for lambda.
+ %plotting (optional) - logical true if plots are desired, false if not.
  
  s = size(A);
  if (s(1)  ~=  s(2))

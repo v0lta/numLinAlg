@@ -25,7 +25,7 @@ xdiff = x - xt;
 norms = [norm(xdiff(:,1)) norm(xdiff(:,2)) norm(xdiff(:,3)) ...
          norm(xdiff(:,4)) norm(xdiff(:,5)) norm(xdiff(:,6))];
 conds = [cond(A1) cond(A2) cond(A3) cond(A4) cond(A5) cond(A6)];
-lambdasLcurv = [l1
+lambdasLcurv = [l1 l2 l3 l4 l5 l6];
 
 %% plotting part
 figure(1)

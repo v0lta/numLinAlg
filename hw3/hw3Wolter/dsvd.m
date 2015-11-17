@@ -1,6 +1,6 @@
-function [ xReg,lambda ] = tikhonov( A,b,ignorePct,plotting )
- %[ xReg,lambda ] = tikhonov( A,b,ignorePct,plotting )
- %use plain tikhonov regularization to find a solution.
+function [ xReg ] = dsvd( A,b,ignorePct,plotting )
+ %dsvd( A,b,plotting )
+ %use plain dsvd regularization to find a solution.
  %A - input Matrix     dimension n*n
  %b - right hand side  dimension n*1
  %plotting - logical true if plots are desired false if not.
@@ -15,8 +15,8 @@ function [ xReg,lambda ] = tikhonov( A,b,ignorePct,plotting )
      plotting = true;
  end
  if (nargin < 3)
-     disp('No filter parameter spefified using 15%');
-     ignorePct = 15;
+     disp('No filter parameter spefified using 95%');
+     ignorePct = 95;
  end
  
  
@@ -39,15 +39,11 @@ function [ xReg,lambda ] = tikhonov( A,b,ignorePct,plotting )
  
  
  for k = 1:n
-     sigma = diag(S);
-%      for i = 1:n
-%         f = S(i,i)^2 / (S(i,i)^2 + lambda(k)^2); 
-%         x = x + f*((U(:,i)'*b)/S(i,i)) * V(:,i);   
-%      end
-     fVec = sigma.^2 ./ ( sigma.^2 + ones(n,1)*lambda(k).^2);
-     F = diag(fVec);
-     x =  sum(V*(diag(U'*b .* sigma.^(-1)))*F,2);
-     %x = sum(U*F*diag(sigma.^(-1))*V'*b,2);      %not so nice numerically.
+     x = zeros(n,1);
+     for i = 1:n
+        f = S(i,i) / (S(i,i) + lambda(k)); 
+        x = x + f*((U(:,i)'*b)/S(i,i)) * V(:,i);   
+     end
      regSolNorm(k) = norm(L*x);
      residlNorm(k) = norm(A*x - b);
      xVec(:,k) = x;
@@ -94,7 +90,7 @@ function [ xReg,lambda ] = tikhonov( A,b,ignorePct,plotting )
     figure(2)
     loglog(residlNorm,regSolNorm)
     hold on;
-    loglog(residlNorm((I)),regSolNorm((I)),'*')
+    loglog(residlNorm(I),regSolNorm(I),'*')
     xlabel('$\|\mathbf{Ax} - \mathbf{b}\|$','Interpreter','LaTex')
     ylabel('$\|\mathbf{Lx}\|$','Interpreter','LaTex')
     hold off; 
@@ -109,7 +105,6 @@ function [ xReg,lambda ] = tikhonov( A,b,ignorePct,plotting )
  end
 
  xReg = xVec(:,I);
- lambda = lambda(I);
 
 end
 

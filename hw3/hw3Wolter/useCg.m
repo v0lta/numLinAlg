@@ -5,7 +5,7 @@ A = {A1,A2,A3,A4,A5,A6};
 b = {berr1,berr2,berr3,berr4,berr5,berr6};
 
 %choose matrix
-i = 6;
+i = 1;
 Ain = cell2mat(A(i));
 bin = cell2mat(b(i));
 cg(Ain,bin,100,true);
