@@ -8,7 +8,7 @@ In this first section the pseudospectrum of a \texttt{grcar} matrix will be comp
 \sigma_{min}^{-1} > \epsilon^{-1} \\
 \sigma_{min}(z\mathbf{I} - \mathbf{A}) < \epsilon \\
 \end{align}
-here $sigma$ stands for the set of singular values. A point $z$ is thus contained in the Pseudospectrum, if the smallest singular value of $z\mathbf{I} - \mathbf{A}$ is smaller then $\epsilon$. Using the definition above the pseudospectrum $\Lambda_\epsilon$ can be simply be computed on a grid by running.\footnote{Trefethen Embree, Spectra and Pseudospectra page 372.}
+here $sigma$ stands for the set of singular values. A point $z$ is thus contained in the Pseudospectrum, if the smallest singular value of $z\mathbf{I} - \mathbf{A}$ is smaller then $\epsilon$. Using the definition above the pseudospectrum $\Lambda_\epsilon$ can simply be computed on a grid by running:\footnote{Trefethen Embree, Spectra and Pseudospectra page 372.}
 \begin{lstlisting}[language = matlab]
 	m = length(x);
 	m2 = length(y);	
@@ -26,14 +26,14 @@ The code snipped above has been used to compute the pseudospectrum shown in figu
 \label{fig:pseudoGrcar}
 \end{figure}
 
-The pseudospectrum can also be defined trough random perturbations using 
+The pseudospectrum can also be defined trough random perturbations as
 \begin{equation}
- z \in \Lambda(\mathbf{A} + \mathbf{E}) \;\; \text{with} \; \mathbf{E} \in \mathbb{C}^{n,n} \; \text{and} \|\mathbf{E}\| < \epsilon.
+ z \in \Lambda(\mathbf{A} + \mathbf{E}) \;\; \text{with} \; \mathbf{E} \in \mathbb{C}^{n,n} \; \text{and} \: \|\mathbf{E}\| < \epsilon.
 \end{equation}
-
+The plots in figure~\ref{fig:randPerts} have been computed using error matrices with $\|\mathbf{E}\| = 10^{-2} = \epsilon$, where for the plot on the left $\mathbf{E}$ was complex. The plot on the right of the same figure shows the eigenvalues of matrices perturbed with real error matrices. The eigenvalues are rarely scattered into the interior of the $ \epsilon = 10^{-2}$ boundary, as the error matrix is exactly equal to $\epsilon$ if the requirement $\| \mathbf{E} \| = \epsilon$ was loosened to $\| \mathbf{E} \| < \epsilon$ the area would probably be covered more completely.
 \begin{figure}
 \includegraphics[width=0.5\linewidth]{../src/figures/randPert}
 \includegraphics[width=0.5\linewidth]{../src/figures/randPertReal}
-\caption{Plot of the $\epsilon = 0.1$ and perturbed eigenvalues. }
+\caption{Plot of the $\Lambda(\mathbf{A} + \mathbf{E})$ with $\|\mathbf{E}\| = 10^{-2} = \epsilon$. Additionally the boundary line for $\epsilon = 10^{-2}$ is shown. }
 \label{fig:randPerts}
 \end{figure}
