@@ -1,4 +1,4 @@
-\section{Correspondende of the two definitions}
+\section{Computing pseudospectra}
 In this first section the pseudospectrum of a \texttt{grcar} matrix will be computed in two different ways. \texttt{Grcar} is an n-by-n Toeplitz matrix with -1s on the subdiagonal, 1s on the diagonal, and 3 superdiagonals of 1s.\footnote{Matlab documentation of the gallery command.} In order to compute the pseudospectrum it is helpful to reformulate the definition of the pseudosprectrum
 \begin{align}
 \| (z\mathbf{I} - \mathbf{A})^{-1} \|_2 > \epsilon^{-1} & \;\;\;\;\;\;\;\; \mathbf{B} = z\mathbf{I} - \mathbf{A}      \\
@@ -7,8 +7,9 @@ In this first section the pseudospectrum of a \texttt{grcar} matrix will be comp
 \| (\mathbf{U} \Sigma^{-1} \mathbf{V}) \|_2 > \epsilon^{-1} & \;\;\;\;\;\;\;\; \text{$\sigma_{min}$ is the largest $\sigma$ of $\Sigma^{-1}$}  \\
 \sigma_{min}^{-1} > \epsilon^{-1} \\
 \sigma_{min}(z\mathbf{I} - \mathbf{A}) < \epsilon \\
+\label{eq:pseudo}
 \end{align}
-here $sigma$ stands for the set of singular values. A point $z$ is thus contained in the Pseudospectrum, if the smallest singular value of $z\mathbf{I} - \mathbf{A}$ is smaller then $\epsilon$. Using the definition above the pseudospectrum $\Lambda_\epsilon$ can simply be computed on a grid by running:\footnote{Trefethen Embree, Spectra and Pseudospectra page 372.}
+here $\sigma$ stands for the set of singular values. A point $z$ is thus contained in the pseudospectrum, if the smallest singular value of $z\mathbf{I} - \mathbf{A}$ is smaller then $\epsilon$. Using the definition above the pseudospectrum $\Lambda_\epsilon$ can simply be computed on a grid by running:\footnote{Trefethen Embree, Spectra and Pseudospectra page 372.}
 \begin{lstlisting}[language = matlab]
 	m = length(x);
 	m2 = length(y);	
@@ -21,7 +22,7 @@ here $sigma$ stands for the set of singular values. A point $z$ is thus containe
 The code snipped above has been used to compute the pseudospectrum shown in figure~\ref{fig:pseudoGrcar}. With \texttt{N = 63} and \texttt{A = gallery('grcar',N)}, \texttt{x} and \texttt{y} define the vectors along the axes. 
 \begin{figure}
 \centering
-\includegraphics[width=0.7\linewidth]{../src/figures/grcar}
+\includegraphics[width=0.5\linewidth]{../src/figures/grcar}
 \caption{Plot of the Pseudospectrum of the \texttt{grcar matrix}.}
 \label{fig:pseudoGrcar}
 \end{figure}
@@ -29,11 +30,99 @@ The code snipped above has been used to compute the pseudospectrum shown in figu
 The pseudospectrum can also be defined trough random perturbations as
 \begin{equation}
  z \in \Lambda(\mathbf{A} + \mathbf{E}) \;\; \text{with} \; \mathbf{E} \in \mathbb{C}^{n,n} \; \text{and} \: \|\mathbf{E}\| < \epsilon.
+\label{eq:defPert}
 \end{equation}
-The plots in figure~\ref{fig:randPerts} have been computed using error matrices with $\|\mathbf{E}\| = 10^{-2} = \epsilon$, where for the plot on the left $\mathbf{E}$ was complex. The plot on the right of the same figure shows the eigenvalues of matrices perturbed with real error matrices. The eigenvalues are rarely scattered into the interior of the $ \epsilon = 10^{-2}$ boundary, as the error matrix is exactly equal to $\epsilon$ if the requirement $\| \mathbf{E} \| = \epsilon$ was loosened to $\| \mathbf{E} \| < \epsilon$ the area would probably be covered more completely.
 \begin{figure}
-\includegraphics[width=0.5\linewidth]{../src/figures/randPert}
-\includegraphics[width=0.5\linewidth]{../src/figures/randPertReal}
+\includegraphics[width=0.4\linewidth]{../src/figures/randPert}
+\includegraphics[width=0.4\linewidth]{../src/figures/randPertReal}
 \caption{Plot of the $\Lambda(\mathbf{A} + \mathbf{E})$ with $\|\mathbf{E}\| = 10^{-2} = \epsilon$. Additionally the boundary line for $\epsilon = 10^{-2}$ is shown. }
 \label{fig:randPerts}
 \end{figure}
+The plots in figure~\ref{fig:randPerts} have been computed using error matrices with $\|\mathbf{E}\| = 10^{-2} = \epsilon$, where for the plot on the left $\mathbf{E}$ was complex. The plot on the right of the same figure shows the eigenvalues of matrices perturbed with real error matrices. The eigenvalues are rarely scattered into the interior of the $ \epsilon = 10^{-2}$ boundary, as the error matrix is exactly equal to $\epsilon$ if the requirement $\| \mathbf{E} \| = \epsilon$ was loosened to $\| \mathbf{E} \| < \epsilon$ the area would probably be covered more completely.
+
+\section{Toeplitz symbol functions and eigenvalues}
+The symbol function of a toeplitz matrix or laurent or toeplitz operator is defined as
+\begin{equation}
+f(z) = \sum_k t_k z^k. 
+\end{equation}
+It can be read of the rows of the corresponding matrix. Alternatively the symbol function can also be read as a definition of the corresponding matrix:
+\begin{align}
+f(z)_1 &=   z^{-3} +  z^{-2} +   z^{-1} -   z + 1                      & \text{    grcar} \\
+f(z)_2 &= -2z^{-3} -  z^{-2} +  iz^{-1}            - 4z^{2} - 2i z^{3} & \text{    frog} \\
+f(z)_3 &=                      2iz^{-1} +    z^{2} + \frac{7}{10}z^{3} & \text{    bull's head} \\
+f(z)_4 &=                        z^{-1}            + \frac{1}{4}z^{2}  & \text{    triangle} \\
+f(z)_5 &= -z^{-4} - (3i + 2i)z^{-3} + iz^{-2} + z^{-1} +\dots          & \text{    whale}\\
+     & \;\;\;\;  10z + (3 + i)z^{2} + 4z^{3} + iz^{4}                      \notag
+\end{align}
+Considering the symbol functions defined above. The following theorem holds: \\
+\newtheorem{theorem}{Theorem}
+\begin{theorem}
+If T is a circulant matrix, then $\Lambda (T) = f(\mathbb{T}_n)$. \\
+If T is a Laurent operator, then $\Lambda (T) = f(\mathbb{T})$.   \\
+If T is a Toeplitz operator, then $\Lambda (T) = f(\mathbb{T})$ together with the points enclosed in this area with nonzero winding number.
+\end{theorem}
+Where $\mathbb{T}$ denotes the unit circle. This theorem can be observed at work in figure~\ref{fig:Task2}. The blue dots are the eigenvalues of the Toeplitz matrices defined in the symbol functions above. The orange line in each plot is the symbol curve evaluated on the unit circle. Finally the green dots come from the circulant matrix cousin of each of the Toeplitz matrices. When looking at the symbol function the corresponding circulant matrix can be constructed from the vector:\footnote{THE ASYMPTOTIC SPECTRA OF BANDED TOEPLITZ AND QUASI-TOEPLITZ MATRICES, RICHARD M. BEAM AND ROBERT F.WARMING, SIAM J. SCI. COMPUT}
+\begin{equation}
+\begin{bmatrix}
+t_{0} & t_{1} & \dots & t_{q} & 0 & \dots & 0 & t_{-p} & \dots & t_{-1} \\
+\end{bmatrix}
+\label{vec:circ}
+\end{equation} 
+A circulant matrix is then constructed by shifting vector~\ref*{vec:circ} by one position to the right in each row. The eigenvalues of the circulant matrices lie exactly on the symbol curve. Shown in green in figure~\ref{fig:Task2}.
+\begin{figure}
+\centering
+\tikzset{mark size=1}
+\input{../src/tikz/grcar.tex}
+\input{../src/tikz/frog.tex}
+\input{../src/tikz/bullshead.tex}
+\input{../src/tikz/triangle.tex}
+\input{../src/tikz/whale.tex}
+\caption{Symbol functions (yellow), Toeplitz eigenvalues(blue) and circulant matrix eigenvalues(green).}
+\label{fig:Task2}
+\end{figure}
+Using definition~\ref{eq:pseudo} once more the pseudospectra of the toeplitz matrices have been computed and plotted for $\epsilon = 10^{-2}, 10^{-3} \dots 10^{-10}$ the results are depicted in figure~\ref{fig:Task3No1}. It turns out that the symbol curve often lies between $\epsilon =  10^{-2} \text{ and } 10^{-3}$.
+\begin{figure}
+\centering
+\tikzset{mark size=1}
+\input{../src/tikz/grcarPseudo3.tex}
+\input{../src/tikz/frogPseudo3.tex}
+\input{../src/tikz/bullPseudo3.tex}
+\input{../src/tikz/trianglePseudo3.tex}
+\input{../src/tikz/whalePseudo3.tex}
+\caption{$\epsilon$-pseudospectra of the matrices under consideration. The spectral lines for $\epsilon = 10^{-2}, 10^{-3} \dots , 10^{-10}$ are shown.}
+\label{fig:Task3No1}
+\end{figure}
+Using the definition of the pseudospectrum given in equation~\ref{eq:defPert}. The plots shown in figure~\ref{fig:Task3No2} have been computed. Taking a closer look at figure \ref{fig:Task3No2} in combunation with the pseudospectra plots in figure~\ref{fig:Task3No1}, the idea of covering the whole interior by using $\epsilon < 10^{-2}$ instead of $\epsilon = 10^{-2}$ is confirmed if $\epsilon$ was occasionally smaller the eigenvalues will lie within a spectral curve further inside the $10^{-2}$ pseudospectral area. This could be implemented by multiplying $\epsilon$ with a random number between 0 and 1 in every iteration.
+\begin{figure}
+\centering
+\tikzset{mark size=1}
+\input{../src/tikz/frogPert3.tex}
+\input{../src/tikz/bullPert3.tex}
+\input{../src/tikz/trianglePert3.tex}
+\input{../src/tikz/whalePert3.tex}
+\caption{Perturbation plots and $\epsilon$-Pseudospectral line for $10^{-2}$. All perturbation matrices have the same norm.}
+\label{fig:Task3No2}
+\end{figure}
+
+Figure~\ref{fig:Task3No3} shows the spectrum of very large matrices with dimension 1000. In combination with the plots of the limit of the finite-dimensional spectrum $\Lambda(T_N)$, one can observe that with that the very large matrices are often closer then their smaller counterparts. With the notable exception of the \texttt{grcar} matrix, which displays plenty of additional eigenvalues at size 1000, which are not part of the limit of the finite dimensional spectrum.
+\begin{figure}
+\centering
+\tikzset{mark size=1}
+\input{../src/tikz/grcar1000.tex}
+\input{../src/tikz/frog1000.tex}
+\input{../src/tikz/bull1000.tex}
+\input{../src/tikz/triangle1000.tex}
+\input{../src/tikz/whale1000.tex}
+\caption{Eigenvalues plots with dimension 1000.}
+\label{fig:Task3No3}
+\end{figure}
+\begin{figure}
+\tikzset{mark size=1}
+\input{../src/tikz/inftyFrog.tex}
+\input{../src/tikz/inftyhead.tex}
+\input{../src/tikz/inftyTri.tex}
+\input{../src/tikz/inftyWhale.tex}
+\caption{Spectra of the four given matrices with infinite dimension.}
+\label{fig:inftySpec}
+\end{figure}
+

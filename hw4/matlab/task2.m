@@ -1,24 +1,18 @@
-%homework 4 task 2,3,4 toeplitz and circulant matrices.
+%toeplitz and circulant matrices.
 
-%0 test with grcar
-dim = 150;
+colorMat = lines;
+
+%% test with grcar
+a = 0:0.1:(2*pi+0.5);
+dim = 200;
 r = [1  1  1 1  zeros(1,dim-4)];
 c = [1 -1  0 0  zeros(1,dim-4)];
 T0 = toeplitz(c,r);
 
-
-%% Toeplitz Matrix 1.
-a = 0:0.1:(2*pi+0.5);
-dim = 150;
-
-    r = [0 0 -4 -2i zeros(1,dim-4)];
-    c = [0 2i -1 2  zeros(1,dim-4)];
-
-T1 = toeplitz(c,r);
 figure(1)
-eigs = eig(T1);
-plot(real(eigs),imag(eigs),'.')
-title('lambda T1')
+eigs = eig(T0);
+plot(real(eigs),imag(eigs),'.','color',colorMat(1,:))
+title('grcar')
 
 symCurve = @(z) c(4)*z.^(-3) + c(3)*z.^(-2) + c(2)*z.^(-1) + c(1)*z.^(0) ...
                  +r(2)*z.^(1) + +r(3)*z.^(2) + r(4)*z.^(3);
@@ -27,16 +21,44 @@ symCurveVals = zeros(1,length(a));
 for i=1:length(a)
   symCurveVals(i) = symCurve(cos(a(i)) + 1i*sin(a(i)));
 end
-figure
-plot(real(symCurveVals),imag(symCurveVals))
 hold on
+plot(real(symCurveVals),imag(symCurveVals),'color',colorMat(2,:))
+
+%create circulant matrix
+v = [r(1:4) zeros(1,dim - 7) flip(c(2:4))];
+circ0 = toeplitz([v(1) fliplr(v(2:end))], v);
+eigs = eig(circ0);
+plot(real(eigs),imag(eigs),'.','color',colorMat(5,:))
+hold off
+
+
+%% Toeplitz Matrix 1.
+    r = [0 0 -4 -2i zeros(1,dim-4)];
+    c = [0 2i -1 2  zeros(1,dim-4)];
+
+T1 = toeplitz(c,r);
+figure
+eigs = eig(T1);
+plot(real(eigs),imag(eigs),'.')
+title('frog')
+
+symCurve = @(z) c(4)*z.^(-3) + c(3)*z.^(-2) + c(2)*z.^(-1) + c(1)*z.^(0) ...
+                 +r(2)*z.^(1) + +r(3)*z.^(2) + r(4)*z.^(3);
+
+symCurveVals = zeros(1,length(a));
+for i=1:length(a)
+  symCurveVals(i) = symCurve(cos(a(i)) + 1i*sin(a(i)));
+end
+hold on
+plot(real(symCurveVals),imag(symCurveVals))
 
 %create circulant matrix
 v = [r(1:4) zeros(1,dim - 7) flip(c(2:4))];
 circ1 = toeplitz([v(1) fliplr(v(2:end))], v);
 eigs = eig(circ1);
-plot(real(eigs),imag(eigs),'.')
-  
+plot(real(eigs),imag(eigs),'.','color',colorMat(5,:))
+hold off
+
 %% Toeplitz Matrix 2 bullshead.
 
 r = [0 0 1 7/10 zeros(1,dim-4)];
@@ -46,6 +68,7 @@ T2 = toeplitz(c,r);
 figure
 eigs = eig(T2);
 plot(real(eigs),imag(eigs),'.')
+hold on
 title('Bulls head')
 
 symCurve = @(z) c(4)*z.^(-3) + c(3)*z.^(-2) + c(2)*z.^(-1) + c(1)*z.^(0) ...
@@ -53,39 +76,24 @@ symCurve = @(z) c(4)*z.^(-3) + c(3)*z.^(-2) + c(2)*z.^(-1) + c(1)*z.^(0) ...
 for i=1:length(a)
   symCurveVals(i) = symCurve(cos(a(i)) + 1i*sin(a(i)));
 end
-figure
+
 plot(real(symCurveVals),imag(symCurveVals))
-hold on
+
 %create circulant matrix
 v = [r(1:4) zeros(1,dim - 7) flip(c(2:4))];
 circ1 = toeplitz([v(1) fliplr(v(2:end))], v);
 eigs = eig(circ1);
-plot(real(eigs),imag(eigs),'.')
+plot(real(eigs),imag(eigs),'.','color',colorMat(5,:))
+hold off
 
 %% Toeplitz Matrix 3 triangle.
 
-r = [0 0 1/4 0 zeros(1,dim-4)];
-c = [0 1  0  0 zeros(1,dim-4)];
-
-T3 = toeplitz(c,r);
-figure
-eigs = eig(T3);
-plot(real(eigs),imag(eigs),'.')
-title('triangle')
-
-symCurve = @(z) c(4)*z.^(-3) + c(3)*z.^(-2) + c(2)*z.^(-1) + c(1)*z.^(0) ...
-                 +r(2)*z.^(1) + +r(3)*z.^(2) + r(4)*z.^(3);
-for i=1:length(a)
-  symCurveVals(i) = symCurve(cos(a(i)) + 1i*sin(a(i)));
-end
-figure
-plot(real(symCurveVals),imag(symCurveVals))
-hold on
 %create circulant matrix
 v = [r(1:4) zeros(1,dim - 7) flip(c(2:4))];
 circ1 = toeplitz([v(1) fliplr(v(2:end))], v);
 eigs = eig(circ1);
-plot(real(eigs),imag(eigs),'.')
+plot(real(eigs),imag(eigs),'.','color',colorMat(5,:))
+hold off
 
 %% Toeplitz Matrix 4 whale.
 
@@ -103,12 +111,13 @@ symCurve = @(z) c(5)*z.^(-4) + c(4)*z.^(-3) + c(3)*z.^(-2) + c(2)*z.^(-1) + c(1)
 for i=1:length(a)
   symCurveVals(i) = symCurve(cos(a(i)) + 1i*sin(a(i)));
 end
-figure
-plot(real(symCurveVals),imag(symCurveVals))
 hold on
+plot(real(symCurveVals),imag(symCurveVals))
+
 %create circulant matrix
 v = [r(1:5) zeros(1,dim - 7) flip(c(2:5))];
 circ1 = toeplitz([v(1) fliplr(v(2:end))], v);
 eigs = eig(circ1);
-plot(real(eigs),imag(eigs),'.')
+plot(real(eigs),imag(eigs),'.','color',colorMat(5,:))
+hold off
 
