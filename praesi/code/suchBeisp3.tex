@@ -1,0 +1,6 @@
+%Bestimmge die Eigenwerte.
+eigs = eig(A);
+maxEig = max(eigs);
+%Lege zwei Strecken x und y fest.
+x = (-abs(real(maxEig)) - 10*eps):res:(abs(real(maxEig)) + 10*eps);
+y = (-abs(imag(maxEig)) - 10*eps):res:(abs(imag(maxEig)) + 10*eps);

@@ -1,0 +1,27 @@
+
+while abs(x-xalt) > 0.01
+    %vertikale Suche.
+    vertHits = vertikaleSuche(A,eps,x,tol);
+    plot(vertHits)
+    %Setzte x neu als den Mittelpunk aus vorherigen Treffern.
+    vertHits = sort(vertHits);
+    for i=1:1:(length(vertHits)-1)
+        %Berechne potentielle x Startpunkte
+        potY =  (vertHits(i)+vertHits(i+1))/2;
+        if min(svd(A-(x+1i*potY)*eye(dim))) <= eps
+            yToCheck(end+1) = potY;
+        end
+    end
+    %Horizontale Suche
+    for i=1:1:length(yToCheck)
+        potHorHits = horizontaleSuche(A,eps,yToCheck(i),tol); 
+        potHorHits = sort(potHorHits);
+        %Das groesste Element steht am ende.
+        horHits(end+1) = potHorHits(end);
+        plot(potHorHits(end),yToCheck(i),'r*')
+        hold on;
+    end
+    horHits = sort(horHits);
+    xalt = x;
+    x = horHits(end)
+end
