@@ -299,9 +299,34 @@ d2 = 0.1 + 0.05*abs(randn(10000,1));} . The last plot is on a semilogarithmic sc
 \end{figure}
 \end{frame}
 
-\section{Regions of guaranteed convergence}
+\section{Stagnation condition}
 \begin{frame}
-show the convergence regions from the paper.
+\centering
+\frametitle{Recurrence for \texttt{gmres(1)}.}
+\begin{equation}
+\mathbf{r}_{k + 1}^{(1)} = \mathbf{r}_k^{(1)} - \frac{\mathbf{r}_k^{(1)T} \mathbf{A} \mathbf{r}_k^{(1)}}{\mathbf{r}_k^{(1)T} \mathbf{A}^T \mathbf{A} \mathbf{r}_k^{(1)}} \mathbf{A} \mathbf{r}_k^{(1)}
+\end{equation}
+$\Rightarrow$ \texttt{gmres(1)} must stagnate if $\mathbf{r}_k^{(1)T} \mathbf{A} \mathbf{r}_k^{(1)} = 0$.
+\end{frame}
+
+\begin{frame}
+\begin{figure}
+\frametitle{Matrix $\mathbf{A}$}
+\centering
+\includegraphics[width=0.7\linewidth]{../images/gmresOneConvA}
+\caption{Region of guaranteed convergence with \texttt{gmres(1)} on matrix $\mathbf{A}$.}
+\label{fig:gmresOneConvA}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\begin{figure}
+\frametitle{Matrix $\mathbf{B}$}
+\centering
+\includegraphics[width=0.7\linewidth]{../images/gmresOneConvB}
+\caption{Region of guaranteed convergence with \texttt{gmres(1)} on matrix $\mathbf{B}$.}
+\label{fig:gmresOneConvB}
+\end{figure}
 \end{frame}
 
 \end{document}

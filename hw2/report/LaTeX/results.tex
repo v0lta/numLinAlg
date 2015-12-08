@@ -1,4 +1,14 @@
 \section{Results}
+\subsection{\texttt{Gmres(m)} convergence on a larger random matrix}
+Before the results from the paper are considered \texttt{gmres(m)} will be run on a random matrix of dimension $60$, the restart parameter will be varied and the effects on convergence observed. Results are shown in figure~\ref{fig:randCompM}.
+In the plot a large spice is observed. In fact \texttt{gmres(34)} seems to have better convergence properties, then \texttt{gmres(35)}. 
+\begin{figure}
+\input{../src/figure/randGMRESIterPlot.tex}
+\input{../src/figure/randGMRESComparison.tex}
+\caption{Convergence plot of \texttt{gmres(m)} for various different \texttt{m}. On the right the residuals of \texttt{m = 34} and \texttt{m = 35} are shown for comparison.}
+\label{fig:randCompM}
+\end{figure}
+
 \subsection{Experiments done in the paper}
 Embree considers two examples in his paper, the first one using
 \begin{equation}
@@ -47,7 +57,7 @@ If $\xi \text{ and } \eta \in [-10,10]$ the plots shown in figures~\ref{fig:fig2
 \centering
 \includegraphics[width=0.45\linewidth]{../src/figure/fig2Matp1}
 \includegraphics[width=0.45\linewidth]{../src/figure/fig2Matp2}
-\caption{Residual magnitude Plot for matrix $\mathbf{A}$, as seen in the Embree paper GMRES(1)(left) and GMRES(2)(right) in figure two.}
+\caption{Residual magnitude plot for matrix $\mathbf{A}$, as seen in the Embree paper GMRES(1)(left) and GMRES(2)(right) in figure two.}
 \label{fig:fig2}
 \end{figure}
 
@@ -77,7 +87,7 @@ In a second series of experiments, designed to further investigate the effect of
 -0.7873 &  -1.0689 &   1.4384 \\
 \end{pmatrix} 
 \end{equation}
-Results for \texttt{GMRES(1)} and \texttt{GMRES(2)}. Are shown in figure \ref{fig:randAGMRES2}. Here it can be observed, that \texttt{GMRES(2)}, converges for all possible right hand sides $\mathbf{b}$, while \texttt{GMRES(1)} does not. This is probably the more common, but mathematically less interesting case. Often convergence improves significantly if the identity matrix is added to A. Unfortunately the condition number got worse by adding one multiple of the identity. It increased from $\kappa(\mathbf{R})=5.1025$ to $\kappa(\mathbf{R} + \mathbf{I})=32.4770$. Adding two dimes the identity matrix makes matters even worse as $\kappa(\mathbf{R} + 2\mathbf{I})=77.5446$, with results shown in figure~\ref{fig:randAp2eyeGMRES2}. Finally adding three times the identity leads to $\kappa(\mathbf{R} + 3\mathbf{I})=6.4262$ and complete convergence for both algorithms figure~\ref{fig:randAp3eyeGMRES2}. However the conditioning is still worse then it was originally, which indicates that conditioning alone can not be used to predict \texttt{GMRES(m)} convergence. 
+Results for \texttt{GMRES(1)} and \texttt{GMRES(2)}. Are shown in figure \ref{fig:randAGMRES2}. Here it can be observed, that \texttt{GMRES(2)}, converges for all possible right hand sides $\mathbf{b}$, while \texttt{GMRES(1)} does not. This is probably the more common, but mathematically less interesting case. Often convergence improves significantly if the identity matrix is added to A. Unfortunately the condition number got worse by adding one multiple of the identity. It increased from $\kappa(\mathbf{R})=5.1025$ to $\kappa(\mathbf{R} + \mathbf{I})=32.4770$. Adding two times the identity matrix makes matters even worse as $\kappa(\mathbf{R} + 2\mathbf{I})=77.5446$, with results shown in figure~\ref{fig:randAp2eyeGMRES2}. Finally adding three times the identity leads to $\kappa(\mathbf{R} + 3\mathbf{I})=6.4262$ and complete convergence for both algorithms figure~\ref{fig:randAp3eyeGMRES2}. However the conditioning is still worse then it was originally, which indicates that conditioning alone cannot be used to predict \texttt{GMRES(m)} convergence. 
 
 \begin{figure}
 \centering
@@ -122,6 +132,48 @@ Similar ones appeared in figure \ref{fig:fig4} when zooming in. No plot exists f
 \label{fig:twoDZoom}
 \end{figure}
 
+\subsection{An attempt to learn more about the noise.}
+In the zoom on figure~\ref{fig:twoDZoom} reveals a noisy area where the outcome of running restart gmres cannot be predicted. This section aims at learning more about the noise. In a first attempt a histogram of the residual magnitude shown in figure~\ref{fig:gmresCHist}, has been made. On the right a zoom on the bottom right part of the histogram is shown, such that parts of the line at zero are neglected. The bar at zero is therefore considerably higher then the one shown. However as most of the surface plot is colored in yellow which corresponds to an error size of $10^0$, this does not come as a surprise that in a histogram of the same image the line at $10^0$. It is rather of more interest do consider the distribution of errors smaller then $10^0 = 1$. And here another peak is observed in bin $[-1.7 -1.6]$, which creates the impression that the noise consists of two superposed noise distribution. As shown in figure~\ref{fig:randnHist} noise with a similar distribution can be produced by superposing shifted absolute valued normal distributions. Finally~\ref{fig:gmresBHist} shows a histogram for the residuals found in the convergence plain of matrix $\mathbf{B}$, interestingly it seems to consists of three superposed distribution. A link between matrix dimensions can not be confirmed by a histogram of $\mathbf{A}$ which only displays two very large bins like $\mathbf{C}$ does.
+
+\begin{figure}
+\centering
+\includegraphics[width=1.05\linewidth]{../src/figure/gmresCHist}
+\caption{Convergence plain of matrix $\mathbf{C}$ along with a histogram of the logarithm of the residual norm.}
+\label{fig:gmresCHist}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=1.05\linewidth]{../src/figure/randnHist}
+\caption{Plots of the distributions generated by
+\texttt{d1 = 0.00001 + 0.05*abs(randn(10000,1));
+d2 = 0.1 + 0.05*abs(randn(10000,1));} . The last plot is on a semilogarithmic scale. }
+\label{fig:randnHist}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=1.05\linewidth]{../src/figure/gmresBHist}
+\caption{Convergence plain of matrix $\mathbf{C}$ along with a histogram of the logarithm of the residual norm.}
+\label{fig:gmresBHist}
+\end{figure}
+
+\subsection{Stagnation condition}
+Using the recurrence relation for \texttt{gmres(1)}
+\begin{equation}
+\mathbf{r}_{k+1}^{(1)} = \mathbf{r}_{k}^{(1)} - \frac{\mathbf{r}_{k}^{(1)T}\mathbf{A}\mathbf{r}_{k}^{(1)}}{\mathbf{r}_{k}^{(1)T}\mathbf{A}^{T}\mathbf{A}\mathbf{r}_{k}^{(1)}} \mathbf{A}\mathbf{r}_{k}^{(1)},
+\end{equation}
+with $\mathbf{r}_{0} = (\xi \; \eta \; 1)$ it follows that \texttt{gmres(1)} must stagnate if $\mathbf{r}_{k}^{(1)T}\mathbf{A}\mathbf{r}_{k}^{(1)} = 0$. Using the condition above the two elpsoids
+\begin{align}
+\xi^2 + \xi \eta + \xi + \eta^2 + 3\eta + 1 = 0, \\
+\xi^2 + 2\xi \eta -2\xi + 2\eta^2 + 4\eta + 3 = 0
+\end{align}
+can be found. Which is a set of points on which the algorithms stagnates.
+\begin{figure}
+\centering
+\includegraphics[width=0.45\linewidth]{../src/figure/gmresOneConvA}
+\includegraphics[width=0.45\linewidth]{../src/figure/gmresOneConvB}
+\caption{}
+\label{fig:gmresOneConv}
+\end{figure}
 
 
 

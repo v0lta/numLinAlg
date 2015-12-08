@@ -1,5 +1,3 @@
-
-
 %% create interesting convergence plain computation-batches
 % and submit them for parallel execution.
 % use plotBatch to see the results.

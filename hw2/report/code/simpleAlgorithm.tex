@@ -1,0 +1,10 @@
+%Die Koordinaten-Eingangsvektoren x und y werden vorgegeben.
+%Durchlaufe die Schleife fuer zwei Laufvariablen k und j.
+for k=1:1:m, for j =1:1:m 
+	%Fuer die Eingangsvektoren x und y
+	%berechne fuer jeden Punkt den kleinsten
+	%Singulaerwert und speichere diese in sigmin.
+	sigmin(j,k) = min(svd(A-(x(k)+y(j)*i)*eye(N)));
+end, end
+%Sende die Ergebnisse an einen Contourplotter.
+contour(x,y,-log10(sigmin))
